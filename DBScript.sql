@@ -10,6 +10,16 @@ CREATE TABLE Role
 )
 
 
+CREATE TABLE Title
+(
+	SEQ int identity(1, 1) primary key,
+	Name nvarchar(100),
+	Publisher nvarchar(50),
+	PublishDate date,
+	Quantity int
+)
+
+
 --Phân loại sách
 CREATE TABLE Category
 (
@@ -32,11 +42,11 @@ CREATE TABLE Book
 (
 	SEQ int identity(1, 1) primary key,
 	ID varchar(10) unique,
-	Name nvarchar(50),
+	Title int CONSTRAINT FK_B_T REFERENCES Title(SEQ),
 	Author nvarchar(50),
 	ReturnType int CONSTRAINT FK_B_RT REFERENCES ReturnType(SEQ),
 	ImportDate date NOT NULL,
-	Quantity int
+	Borrowed bit
 )
 
 --Thông tin category tương ứng book
@@ -95,5 +105,7 @@ CREATE TABLE Favorite_List
 	BID int CONSTRAINT FK_FL_B REFERENCES Book(SEQ),
 	MID int CONSTRAINT FK_FL_M REFERENCES Member(SEQ)
 )
+
+
 
 
