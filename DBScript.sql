@@ -10,7 +10,6 @@
 --CREATE DATABASE OnlineLibrary
 --USE OnlineLibrary
 
-
 --Phân quyền cho người dùng phần mềm này
 CREATE TABLE Role
 (
