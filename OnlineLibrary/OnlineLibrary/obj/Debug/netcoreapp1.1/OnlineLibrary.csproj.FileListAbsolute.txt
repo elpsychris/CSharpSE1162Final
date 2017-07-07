@@ -1,0 +1,9 @@
+c:\users\henry\documents\visual studio 2017\Projects\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLibrary.deps.json
+c:\users\henry\documents\visual studio 2017\Projects\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLibrary.runtimeconfig.json
+c:\users\henry\documents\visual studio 2017\Projects\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLibrary.runtimeconfig.dev.json
+c:\users\henry\documents\visual studio 2017\Projects\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLibrary.dll
+c:\users\henry\documents\visual studio 2017\Projects\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLibrary.pdb
+c:\users\henry\documents\visual studio 2017\Projects\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.AssemblyInfo.cs
+c:\users\henry\documents\visual studio 2017\Projects\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.dll
+c:\users\henry\documents\visual studio 2017\Projects\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.pdb
+c:\users\henry\documents\visual studio 2017\Projects\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.csprojResolveAssemblyReference.cache

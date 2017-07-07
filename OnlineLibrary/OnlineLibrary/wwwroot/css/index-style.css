@@ -1,0 +1,416 @@
+﻿@font-face {
+  font-family: 'fontello';
+  src: url('../font/fontello.eot');
+  src: url('../font/fontello.eot#iefix') format('embedded-opentype'), url('../font/fontello.woff') format('woff'), url('../font/fontello.ttf') format('truetype'), url('../font/fontello.svg#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@charset "utf-8";
+
+/* CSS Document */
+
+
+/*General*/
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Tahoma";
+}
+
+
+/*Header*/
+
+.header {
+  border-bottom: 2px solid #7d5d3b;
+  height: auto;
+  background-color: #d6b958;
+}
+
+.logo {
+  background: url("../images/logo.png") no-repeat;
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.logo::after {
+  content: "Cóc Library";
+  font-family: "Franklin Gothic";
+  margin: 15px 55px;
+  position: absolute;
+  font-size: 1.25em;
+  font-weight: bold;
+  color: #7d5d3b;
+}
+
+.login-right {
+  display: inline-block;
+  float: right;
+  position: relative;
+  height: 50px;
+  padding-right: 2em;
+}
+
+.login-right a {
+  font-family: "Franklin Gothic";
+  font-weight: bold;
+  color: #7d5d3b;
+  text-decoration: none;
+  line-height: 50px;
+  text-align: center;
+}
+
+.menu-bar {
+  position: relative;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  clear: both;
+}
+
+.menu-bar ul {
+  display: block;
+  position: relative;
+  width: 100%;
+  background: #333333;
+  text-align: center;
+  list-style: none;
+  height: 40px;
+  box-sizing: border-box;
+}
+
+.menu-bar li {
+  display: inline-block;
+  height: 40px;
+}
+
+.menu-bar a {
+  display: inline-block;
+  padding: .25em;
+  margin: .25em;
+  text-decoration: none;
+  color: #987148;
+}
+
+.menu-bar li a::after {
+  content: '|';
+  position: relative;
+  left: .5em;
+  color: rgba(125, 93, 59, .4);
+}
+
+
+/*Banner*/
+
+.banner-wrapper {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.banner {
+  width: 100%;
+  height: 0;
+  padding-top: 33%;
+}
+
+#background-1 {
+  background: url("../images/banner.png");
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+
+
+/*WIDGET*/
+
+.search-box {
+  display: none;
+}
+
+#sb-1 {
+  position: relative;
+  background-color: #063339;
+  border-top-left-radius: 10px;
+  margin-left: 18%;
+  margin-bottom: 2%;
+  width: 230px;
+  height: 95px;
+}
+
+#sb-1 span {
+  font-family: Tahoma;
+  font-size: 13px;
+  position: absolute;
+  top: 2px;
+  left: 10px;
+  color: white;
+  font-weight: 600;
+}
+
+#sb-2 {
+  background-color: #c5eaee;
+  position: absolute;
+  width: 98.5%;
+  height: 80%;
+  right: 0px;
+  bottom: 0px;
+}
+
+.go-btn {
+  position: absolute;
+  background: url("../images/go_btn.png") no-repeat;
+  background-size: cover;
+  top: 7px;
+  right: 20px;
+  width: 25px;
+  height: 25px;
+  border-radius: 20px;
+}
+
+#sb-2 input[type="text"] {
+  position: absolute;
+  top: 10px;
+  left: 5px;
+}
+
+#sb-2 input[type="radio"]:nth-child(2) {
+  margin-left: 5px;
+}
+
+#sb-2 .radio {
+  position: absolute;
+  top: 35px;
+  left: 5px;
+  font-size: 12px;
+  font-family: Tahoma;
+}
+
+#sb-2 span {
+  position: absolute;
+  top: 55px;
+  left: 10px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+#sb-2 a {
+  color: grey;
+  text-decoration: none;
+}
+
+#sb-2 a:hover {
+  color: grey;
+  text-decoration: underline;
+}
+
+#sb-3 {
+  position: relative;
+  background-color: #063339;
+  border-top-left-radius: 10px;
+  margin-left: 18%;
+  width: 230px;
+  height: 75px;
+}
+
+#sb-3 span {
+  font-family: Tahoma;
+  font-size: 13px;
+  position: absolute;
+  top: 2px;
+  left: 10px;
+  color: white;
+  font-weight: 600;
+}
+
+#sb-4 {
+  background-color: #c5eaee;
+  position: absolute;
+  width: 98.5%;
+  height: 70%;
+  right: 0px;
+  bottom: 0px;
+}
+
+#sb-4 .alphabetical {
+  position: absolute;
+  top: 10px;
+  left: 4px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+#sb-4 a {
+  text-decoration: none;
+  color: #20484c;
+  padding-left: 2px;
+}
+
+
+/*MAIN CONTENT*/
+
+#main-content {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.main-panel {
+  position: relative;
+  padding-top: 1em;
+}
+
+.main-panel:nth-child(odd) {
+  background: #f7f7f7;
+  box-sizing: border-box;
+  padding-left: .5em;
+  height: 100%;
+}
+
+.main-panel:nth-child(even) {
+  box-sizing: border-box;
+  padding-left: .5em;
+}
+
+.main-panel .title {
+  font-size: 1.5em;
+  display: block;
+  padding-bottom: 1em;
+  color: #1a1a1a;
+  margin: 0 20%;
+}
+
+.main-panel .book-list {
+  box-sizing: border-box;
+  margin: 0 20%;
+}
+
+.main-panel .book {
+  height: 300px;
+  width: 150px;
+  display: inline-flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.main-panel .book-attr {
+  width: 100%;
+}
+
+.main-panel .book-illu img {
+  width: 100%;
+  position: absolute;
+  transition: all .3s;
+}
+
+.main-panel .book .book-illu {
+  width: 90%;
+  margin: 0 auto;
+  position: relative;
+  box-sizing: border-box;
+  height: 60%;
+}
+
+.main-panel .book-illu:hover img {
+  width: 105%;
+}
+
+.main-panel .book-name {
+  font-size: 1.05em;
+  margin-top: 10px;
+  position: relative;
+  margin-left: .5em;
+}
+
+.main-panel .book-rate {
+  color: #999999;
+  font-size: .8em;
+  margin-top: 5px;
+  position: relative;
+  margin-left: .5em;
+}
+
+
+/*FOOTER*/
+#footer-upper {
+  background: #1a1a1a;
+  height: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1em;
+  box-sizing: border-box;
+}
+#footer-upper .group-list div {
+  color: white;
+  font-size: .95em;
+  border-bottom: 1px solid rgba(255,255,255,.3);
+  padding: 1em 0;
+  margin-bottom: 1em;
+
+}
+#footer-upper .group-list {
+  position: relative;
+  width: 150px;
+  display: inline-block;
+  height: 100%;
+  vertical-align: top;
+  margin: 0 1em;
+  text-align: left;
+}
+.group-list img {
+  width: 150px;
+}
+.upper-half:nth-child(odd) {
+  width: 40%;
+  position: relative;
+  height: 100%;
+  text-align: right;
+}
+.upper-half:nth-child(even) {
+  width: 50%;
+  position: relative;
+  height: 100%;
+  text-align: left;
+}
+.group-list ul {
+  list-style-type: none;
+  position: relative;
+  font-size: .9em;
+}
+
+#footer-upper li {
+  margin: .25em;
+  color: #999999;
+}
+
+#footer {
+  width: 100%;
+  background: black;
+  color: #999999;
+  box-sizing: border-box;
+	text-align: center;
+}
+
+.e-footer {
+  display: inline-block;
+  margin: 0 1vw;
+  font-size: .75em;
+	text-align: center;
+	position: relative;
+	top: -24px;
+
+}
+
+#mark-logo {
+  background: url("../images/logo-mark.png") no-repeat;
+  background-size: 100% auto;
+  width: 60px;
+  height: 60px;
+  display: inline-block;
+	position: relative;
+	top: 5px;
+}

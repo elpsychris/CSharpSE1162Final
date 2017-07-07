@@ -1,0 +1,97 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\font\fontello-3c140c82\fontello-3c140c82\config.json" />
+    <Content Include="wwwroot\images\516CL5AVKVL._SX406_BO1,204,203,200_.jpg" />
+    <Content Include="wwwroot\images\51Gsycdh-TL._SX430_BO1,204,203,200_.jpg" />
+    <Content Include="wwwroot\images\banner.png" />
+    <Content Include="wwwroot\images\banner.psd" />
+    <Content Include="wwwroot\images\Bao.jpg" />
+    <Content Include="wwwroot\images\Bao.png" />
+    <Content Include="wwwroot\images\book.png" />
+    <Content Include="wwwroot\images\default_book.png" />
+    <Content Include="wwwroot\images\doc-va-tim1.jpg" />
+    <Content Include="wwwroot\images\fpt-university-in-bangladesh_-1.jpg" />
+    <Content Include="wwwroot\images\go_btn.png" />
+    <Content Include="wwwroot\images\login.png" />
+    <Content Include="wwwroot\images\logo-mark.png" />
+    <Content Include="wwwroot\images\logo.jpg" />
+    <Content Include="wwwroot\images\logo.png" />
+    <Content Include="wwwroot\images\logo.psd" />
+    <Content Include="wwwroot\images\MG_0315-link-1.jpg" />
+    <Content Include="wwwroot\images\pop9.jpg" />
+    <Content Include="wwwroot\images\poster-ver4-copy.jpg" />
+    <Content Include="wwwroot\images\resizer-232.jpeg" />
+    <Content Include="wwwroot\images\sinhvienit-net-unnamed.jpg" />
+    <Content Include="wwwroot\images\spectrum.jpg" />
+    <Content Include="wwwroot\images\Tuan.png" />
+    <Content Include="wwwroot\images\Tuan.psd" />
+    <Content Include="wwwroot\images\Untitled-1.jpg" />
+    <Content Include="wwwroot\images\visa.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\font\fontello-3c140c82\fontello-3c140c82\css\animation.css" />
+    <None Include="wwwroot\font\fontello-3c140c82\fontello-3c140c82\css\fontello-codes.css" />
+    <None Include="wwwroot\font\fontello-3c140c82\fontello-3c140c82\css\fontello-embedded.css" />
+    <None Include="wwwroot\font\fontello-3c140c82\fontello-3c140c82\css\fontello-ie7-codes.css" />
+    <None Include="wwwroot\font\fontello-3c140c82\fontello-3c140c82\css\fontello-ie7.css" />
+    <None Include="wwwroot\font\fontello-3c140c82\fontello-3c140c82\css\fontello.css" />
+    <None Include="wwwroot\font\fontello-3c140c82\fontello-3c140c82\demo.html" />
+    <None Include="wwwroot\font\fontello-3c140c82\fontello-3c140c82\font\fontello.eot" />
+    <None Include="wwwroot\font\fontello-3c140c82\fontello-3c140c82\font\fontello.svg" />
+    <None Include="wwwroot\font\fontello-3c140c82\fontello-3c140c82\font\fontello.ttf" />
+    <None Include="wwwroot\font\fontello-3c140c82\fontello-3c140c82\font\fontello.woff" />
+    <None Include="wwwroot\font\fontello-3c140c82\fontello-3c140c82\font\fontello.woff2" />
+    <None Include="wwwroot\font\fontello-3c140c82\fontello-3c140c82\LICENSE.txt" />
+    <None Include="wwwroot\font\fontello-3c140c82\fontello-3c140c82\README.txt" />
+    <None Include="wwwroot\font\fontello.eot" />
+    <None Include="wwwroot\font\fontello.svg" />
+    <None Include="wwwroot\font\fontello.ttf" />
+    <None Include="wwwroot\font\fontello.woff" />
+    <None Include="wwwroot\font\fontello.woff2" />
+    <None Include="wwwroot\font\MTO Astro City.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\HIMPACT.TTF" />
+    <None Include="wwwroot\font\_MTO FONT\MTO Astro City.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\MTO augie.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\MTO Canun.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\MTO Chancery.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\MTO CHANEY.TTF" />
+    <None Include="wwwroot\font\_MTO FONT\MTO Chiller.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\MTO COMIC 1.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\MTO COMIC 2.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\MTO Damn Noisy Kids.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\MTO Dom.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\MTO Franko.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\MTO Getting Angry.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\MTO Grunge Sans Shadow.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\MTO Grunge Sans.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\MTO Jamai.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\MTO Monster Talking.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\MTO Mysti.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\MTO Oliver.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\MTO Telephone.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\MTO Wahroonga.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\MTO Yikes.ttf" />
+    <None Include="wwwroot\font\_MTO FONT\MTO You are loved.ttf" />
+  </ItemGroup>
+
+</Project>
