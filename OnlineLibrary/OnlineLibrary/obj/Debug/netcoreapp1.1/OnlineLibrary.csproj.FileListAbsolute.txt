@@ -7,3 +7,12 @@ c:\users\henry\documents\visual studio 2017\Projects\OnlineLibrary\OnlineLibrary
 c:\users\henry\documents\visual studio 2017\Projects\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.dll
 c:\users\henry\documents\visual studio 2017\Projects\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.pdb
 c:\users\henry\documents\visual studio 2017\Projects\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.csprojResolveAssemblyReference.cache
+D:\Laptrinh\CSharp\New folder\CSharpSE1162Final\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLibrary.deps.json
+D:\Laptrinh\CSharp\New folder\CSharpSE1162Final\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLibrary.runtimeconfig.json
+D:\Laptrinh\CSharp\New folder\CSharpSE1162Final\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLibrary.runtimeconfig.dev.json
+D:\Laptrinh\CSharp\New folder\CSharpSE1162Final\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLibrary.dll
+D:\Laptrinh\CSharp\New folder\CSharpSE1162Final\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLibrary.pdb
+D:\Laptrinh\CSharp\New folder\CSharpSE1162Final\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.csprojResolveAssemblyReference.cache
+D:\Laptrinh\CSharp\New folder\CSharpSE1162Final\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.AssemblyInfo.cs
+D:\Laptrinh\CSharp\New folder\CSharpSE1162Final\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.dll
+D:\Laptrinh\CSharp\New folder\CSharpSE1162Final\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.pdb

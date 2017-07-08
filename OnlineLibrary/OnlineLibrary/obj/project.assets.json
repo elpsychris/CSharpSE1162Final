@@ -9770,15 +9770,15 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Henry\\.nuget\\packages\\": {}
+    "C:\\Users\\USER\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\users\\henry\\documents\\visual studio 2017\\Projects\\OnlineLibrary\\OnlineLibrary\\OnlineLibrary.csproj",
+      "projectUniqueName": "D:\\Laptrinh\\CSharp\\New folder\\CSharpSE1162Final\\OnlineLibrary\\OnlineLibrary\\OnlineLibrary.csproj",
       "projectName": "OnlineLibrary",
-      "projectPath": "c:\\users\\henry\\documents\\visual studio 2017\\Projects\\OnlineLibrary\\OnlineLibrary\\OnlineLibrary.csproj",
-      "outputPath": "c:\\users\\henry\\documents\\visual studio 2017\\Projects\\OnlineLibrary\\OnlineLibrary\\obj\\",
+      "projectPath": "D:\\Laptrinh\\CSharp\\New folder\\CSharpSE1162Final\\OnlineLibrary\\OnlineLibrary\\OnlineLibrary.csproj",
+      "outputPath": "D:\\Laptrinh\\CSharp\\New folder\\CSharpSE1162Final\\OnlineLibrary\\OnlineLibrary\\obj\\",
       "projectStyle": "PackageReference",
       "originalTargetFrameworks": [
         "netcoreapp1.1"

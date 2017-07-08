@@ -93,5 +93,8 @@
     <None Include="wwwroot\font\_MTO FONT\MTO Yikes.ttf" />
     <None Include="wwwroot\font\_MTO FONT\MTO You are loved.ttf" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
 
 </Project>
