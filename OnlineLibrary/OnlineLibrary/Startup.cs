@@ -53,7 +53,7 @@ namespace OnlineLibrary
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=main}/{id?}");
+                    template: "{controller=Dashboard}/{action=ShowBorrowedBooks}/{id?}");
             });
         }
     }

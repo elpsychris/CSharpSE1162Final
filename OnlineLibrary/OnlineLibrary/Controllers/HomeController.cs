@@ -8,7 +8,7 @@ namespace OnlineLibrary.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult main()
+        public IActionResult tables()
         {
             return View();
         }
