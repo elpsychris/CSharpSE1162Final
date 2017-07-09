@@ -30,10 +30,10 @@ namespace OnlineLibrary.Models
             modelBuilder.Entity<Account>(entity =>
             {
                 entity.HasKey(e => e.Seq)
-                    .HasName("PK__Account__CA1938C083B34AD5");
+                    .HasName("PK__Account__CA1938C0F4C22D7F");
 
                 entity.HasIndex(e => e.Id)
-                    .HasName("UQ__Account__3214EC2689B55189")
+                    .HasName("UQ__Account__3214EC2657008553")
                     .IsUnique();
 
                 entity.Property(e => e.Seq).HasColumnName("SEQ");
@@ -74,7 +74,7 @@ namespace OnlineLibrary.Models
             modelBuilder.Entity<ActivityHistory>(entity =>
             {
                 entity.HasKey(e => e.Seq)
-                    .HasName("PK__Activity__CA1938C0F96D71B3");
+                    .HasName("PK__Activity__CA1938C061D658B1");
 
                 entity.ToTable("Activity_History");
 
@@ -108,15 +108,13 @@ namespace OnlineLibrary.Models
             modelBuilder.Entity<Book>(entity =>
             {
                 entity.HasKey(e => e.Seq)
-                    .HasName("PK__Book__CA1938C0F815F9CB");
+                    .HasName("PK__Book__CA1938C0D8F9F018");
 
                 entity.HasIndex(e => e.Id)
-                    .HasName("UQ__Book__3214EC260905F1FA")
+                    .HasName("UQ__Book__3214EC26CF0EF730")
                     .IsUnique();
 
                 entity.Property(e => e.Seq).HasColumnName("SEQ");
-
-                entity.Property(e => e.Author).HasMaxLength(50);
 
                 entity.Property(e => e.Id)
                     .IsRequired()
@@ -126,11 +124,6 @@ namespace OnlineLibrary.Models
                 entity.Property(e => e.ImportDate).HasColumnType("date");
 
                 entity.Property(e => e.StatusId).HasColumnName("StatusID");
-
-                entity.HasOne(d => d.ReturnTypeNavigation)
-                    .WithMany(p => p.Book)
-                    .HasForeignKey(d => d.ReturnType)
-                    .HasConstraintName("FK_B_RT");
 
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.Book)
@@ -146,7 +139,7 @@ namespace OnlineLibrary.Models
             modelBuilder.Entity<BookCategoryDetail>(entity =>
             {
                 entity.HasKey(e => e.Seq)
-                    .HasName("PK__Book_Cat__CA1938C024F3A9D0");
+                    .HasName("PK__Book_Cat__CA1938C064352626");
 
                 entity.ToTable("Book_Category_Detail");
 
@@ -170,7 +163,7 @@ namespace OnlineLibrary.Models
             modelBuilder.Entity<BookStatus>(entity =>
             {
                 entity.HasKey(e => e.StatusId)
-                    .HasName("PK__Book_Sta__C8EE20437BEEAE00");
+                    .HasName("PK__Book_Sta__C8EE2043FEA7DCC2");
 
                 entity.ToTable("Book_Status");
 
@@ -184,7 +177,7 @@ namespace OnlineLibrary.Models
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.HasKey(e => e.Seq)
-                    .HasName("PK__Category__CA1938C074CF3BF3");
+                    .HasName("PK__Category__CA1938C00CEB313D");
 
                 entity.Property(e => e.Seq).HasColumnName("SEQ");
 
@@ -194,7 +187,7 @@ namespace OnlineLibrary.Models
             modelBuilder.Entity<FavoriteList>(entity =>
             {
                 entity.HasKey(e => e.Seq)
-                    .HasName("PK__Favorite__CA1938C06D40133F");
+                    .HasName("PK__Favorite__CA1938C0C6B5D88D");
 
                 entity.ToTable("Favorite_List");
 
@@ -218,12 +211,12 @@ namespace OnlineLibrary.Models
             modelBuilder.Entity<FineHistory>(entity =>
             {
                 entity.HasKey(e => e.Seq)
-                    .HasName("PK__Fine_His__CA1938C02565EC0C");
+                    .HasName("PK__Fine_His__CA1938C0C5457C85");
 
                 entity.ToTable("Fine_History");
 
                 entity.HasIndex(e => e.Aseq)
-                    .HasName("UQ__Fine_His__4DF639F1D75EBE38")
+                    .HasName("UQ__Fine_His__4DF639F14F3D79E2")
                     .IsUnique();
 
                 entity.Property(e => e.Seq).HasColumnName("SEQ");
@@ -262,7 +255,7 @@ namespace OnlineLibrary.Models
             modelBuilder.Entity<ReturnType>(entity =>
             {
                 entity.HasKey(e => e.Seq)
-                    .HasName("PK__Return_T__CA1938C0674B63F1");
+                    .HasName("PK__Return_T__CA1938C0876A8F85");
 
                 entity.ToTable("Return_Type");
 
@@ -285,6 +278,8 @@ namespace OnlineLibrary.Models
 
                 entity.Property(e => e.Seq).HasColumnName("SEQ");
 
+                entity.Property(e => e.Author).HasMaxLength(50);
+
                 entity.Property(e => e.Description).HasColumnType("varchar(max)");
 
                 entity.Property(e => e.Illu).HasColumnType("varchar(250)");
@@ -296,6 +291,11 @@ namespace OnlineLibrary.Models
                 entity.Property(e => e.Name).HasMaxLength(100);
 
                 entity.Property(e => e.Publisher).HasMaxLength(50);
+
+                entity.HasOne(d => d.ReturnTypeNavigation)
+                    .WithMany(p => p.Title)
+                    .HasForeignKey(d => d.ReturnType)
+                    .HasConstraintName("FK_Title_Return_Type");
             });
         }
     }

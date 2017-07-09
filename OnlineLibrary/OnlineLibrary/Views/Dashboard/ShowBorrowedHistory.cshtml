@@ -288,7 +288,7 @@
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3>Borrowing Books</h3>
+                            <h3>Borrowed History</h3>
                         </div>
                     </div>
 
@@ -301,15 +301,9 @@
                                     <h4>Today is: @DateTime.Now.ToString("dd/MM/yyyy")</h4>
                                 </ul>
                                 <div class="x_title">
-                                    <a asp-action="ShowBorrowedHistory" class="btn btn-primary">View your borrow history</a>
+                                    <a asp-action="ShowBorrowedBooks" class="btn btn-primary">View your borrowing books</a>
                                     <div class="clearfix"></div>
                                 </div>
-                                @{
-                                    int i = 1;
-                                    int remainDays = 0;
-                                    string dueDate = "";
-                                    int fineAmount = 20, fineAmountHasToPay = 0, expiredBook = 0, warningBook = 0;
-                                }
 
                                 <div class="x_content">
                                     @if (list.Count != 0)
@@ -321,85 +315,37 @@
                                                     <th>Book's ID</th>
                                                     <th>Book's Name</th>
                                                     <th>Borrow Date</th>
-                                                    <th>Due Date</th>
-                                                    <th>Remaing Days</th>
+                                                    <th>Return Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach (ActivityHistory ah in list)
-                                                {
-                                                    remainDays = (int)Math.Ceiling((decimal)ah.BorrowDate.Value.AddDays((double)@ah.B.TitleNavigation.ReturnTypeNavigation.NoOfDay).Subtract(DateTime.Now).TotalDays);
-                                                    dueDate = ah.BorrowDate.Value.AddDays((double)@ah.B.TitleNavigation.ReturnTypeNavigation.NoOfDay).ToString("dd/MM/yyyy");
-                                                    @if (remainDays < 0)
-                                                    {
-                                                        <tr style="background-color: #E96152; font-weight: 700;">
-                                                            <td>@i</td>
-                                                            <td>@ah.B.Id</td>
-                                                            <td>@ah.B.TitleNavigation.Name</td>
-                                                            <td>@ah.BorrowDate.Value.ToString("dd/MM/yyyy")</td>
-                                                            <td>@dueDate</td>
-                                                            <td>@remainDays</td>
-                                                        </tr>
-                                                        fineAmountHasToPay += (fineAmount * Math.Abs(remainDays));
-                                                        expiredBook++;
-                                                    }
-                                                    else if (remainDays <= 5)
-                                                    {
-                                                        <tr style="background-color: #F3A72D; font-weight: 700;">
-                                                            <td>@i</td>
-                                                            <td>@ah.B.Id</td>
-                                                            <td>@ah.B.TitleNavigation.Name</td>
-                                                            <td>@ah.BorrowDate.Value.ToString("dd/MM/yyyy")</td>
-                                                            <td>@dueDate</td>
-                                                            <td>@remainDays</td>
-                                                        </tr>
-                                                        warningBook++;
-                                                    }
-                                                    else
+                                                @{
+                                                    int i = 1;
+                                                    @foreach (ActivityHistory ah in list)
                                                     {
                                                         <tr style="font-weight: 700;">
                                                             <td>@i</td>
                                                             <td>@ah.B.Id</td>
                                                             <td>@ah.B.TitleNavigation.Name</td>
                                                             <td>@ah.BorrowDate.Value.ToString("dd/MM/yyyy")</td>
-                                                            <td>@dueDate</td>
-                                                            <td>@Math.Ceiling((decimal)ah.BorrowDate.Value.AddDays((double)@ah.B.TitleNavigation.ReturnTypeNavigation.NoOfDay).Subtract(DateTime.Now).TotalDays)</td>
+                                                            <td>@ah.ReturnDate.Value.ToString("dd/MM/yyyy")</td>
                                                         </tr>
-
+                                                        i++;
                                                     }
-                                                    i++;
                                                 }
                                             </tbody>
                                         </table>
-                                    }
-                                    else
-                                    {
-                                        <div class="alert alert-info alert-dismissible fade in" style="color: #2a2a2a;">
-                                            <strong>You don't have any borrowed history</strong>
-                                        </div>
-                                    }
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="alert alert-info alert-dismissible fade in" style="color: #2a2a2a;">
+                                                            <strong>You don't have any borrowed history</strong>
+                                                        </div>
+                                                    }
                                 </div>
                             </div>
                         </div>
                     </div>
-                    @if (expiredBook != 0 && list.Count != 0)
-                    {
-                        <div class="alert alert-danger alert-dismissible fade in" style="color: #2a2a2a;">
-                            <strong>You have @expiredBook expired books, that's @fineAmountHasToPay.ToString("C") to be paid!!</strong>
-                        </div>
-                    }
-                    @if (warningBook != 0 && list.Count != 0)
-                    {
-                        <div class="alert alert-warning alert-dismissible fade in" style="color: #2a2a2a;">
-                            <strong>You have @warningBook books that's almost due, stay on guard!</strong>
-                        </div>
-                    }
-                    @if (warningBook == 0 && expiredBook == 0 && list.Count != 0)
-                    {
-                        <div class="alert alert-success alert-dismissible fade in" style="color: #2a2a2a;">
-                            <strong>You are keeping up the pace, that's great sign!</strong>
-                        </div>
-                    }
                 </div>
             </div>
             <!-- /page content -->

@@ -7,12 +7,12 @@ namespace OnlineLibrary.Models
     {
         public ReturnType()
         {
-            Book = new HashSet<Book>();
+            Title = new HashSet<Title>();
         }
 
         public int Seq { get; set; }
         public int? NoOfDay { get; set; }
 
-        public virtual ICollection<Book> Book { get; set; }
+        public virtual ICollection<Title> Title { get; set; }
     }
 }
