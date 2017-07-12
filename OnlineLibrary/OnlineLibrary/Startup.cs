@@ -36,9 +36,9 @@ namespace OnlineLibrary
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            app.UseSession();
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-            app.UseSession();
 
             if (env.IsDevelopment())
             {
@@ -56,7 +56,7 @@ namespace OnlineLibrary
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Dashboard}/{action=ShowBorrowedBooks}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

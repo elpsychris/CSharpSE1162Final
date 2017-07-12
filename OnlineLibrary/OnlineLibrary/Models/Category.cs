@@ -7,12 +7,12 @@ namespace OnlineLibrary.Models
     {
         public Category()
         {
-            BookCategoryDetail = new HashSet<BookCategoryDetail>();
+            TitleCategoryDetail = new HashSet<TitleCategoryDetail>();
         }
 
         public int Seq { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection<BookCategoryDetail> BookCategoryDetail { get; set; }
+        public virtual ICollection<TitleCategoryDetail> TitleCategoryDetail { get; set; }
     }
 }

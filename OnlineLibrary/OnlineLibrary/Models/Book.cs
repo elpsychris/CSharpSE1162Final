@@ -8,8 +8,6 @@ namespace OnlineLibrary.Models
         public Book()
         {
             ActivityHistory = new HashSet<ActivityHistory>();
-            BookCategoryDetail = new HashSet<BookCategoryDetail>();
-            FavoriteList = new HashSet<FavoriteList>();
         }
 
         public int Seq { get; set; }
@@ -19,8 +17,6 @@ namespace OnlineLibrary.Models
         public int? StatusId { get; set; }
 
         public virtual ICollection<ActivityHistory> ActivityHistory { get; set; }
-        public virtual ICollection<BookCategoryDetail> BookCategoryDetail { get; set; }
-        public virtual ICollection<FavoriteList> FavoriteList { get; set; }
         public virtual BookStatus Status { get; set; }
         public virtual Title TitleNavigation { get; set; }
     }

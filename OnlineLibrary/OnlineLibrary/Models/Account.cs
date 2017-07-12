@@ -23,6 +23,7 @@ namespace OnlineLibrary.Models
         public string Address { get; set; }
         public string Rid { get; set; }
         public bool? Status { get; set; }
+        public string Avatar { get; set; }
 
         public virtual ICollection<ActivityHistory> ActivityHistory { get; set; }
         public virtual ICollection<FavoriteList> FavoriteList { get; set; }

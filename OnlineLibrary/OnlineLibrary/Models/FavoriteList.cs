@@ -6,10 +6,10 @@ namespace OnlineLibrary.Models
     public partial class FavoriteList
     {
         public int Seq { get; set; }
-        public int? Bid { get; set; }
-        public int? Mid { get; set; }
+        public int? TitleId { get; set; }
+        public int? MemberId { get; set; }
 
-        public virtual Book B { get; set; }
-        public virtual Account M { get; set; }
+        public virtual Account Member { get; set; }
+        public virtual Title Title { get; set; }
     }
 }
