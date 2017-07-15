@@ -26,7 +26,6 @@
     border-bottom: 2px solid #7d5d3b;
     height: 90px;
     background-color: #d6b958;
-    overflow: hidden;
 }
 
 .logo {
@@ -64,6 +63,27 @@
         text-decoration: none;
         line-height: 50px;
         text-align: center;
+        display: inline-block;
+        float: right;
+    }
+
+        .login-right a:link {
+            text-decoration: none;
+        }
+
+#icon {
+    width: 50px;
+    height: 50px;
+    margin-left: 1em;
+    transition: all .5s;
+    border-radius: 25%;
+}
+
+    #icon:hover {
+        -ms-transform: rotate(360deg); /* IE 9 */
+        -webkit-transform: rotate(360deg); /* Chrome, Safari, Opera */
+        transform: rotate(360deg);
+        border-radius: 50%;
     }
 
 .menu-bar {
@@ -78,7 +98,7 @@
         display: block;
         position: relative;
         width: 100%;
-        background: #333333;
+        background: #1a1a1a;
         text-align: center;
         list-style: none;
         height: 40px;
@@ -95,16 +115,17 @@
         padding: .5em;
         margin: .25em 0 .25em 0;
         text-decoration: none;
-        color: #987148;
+        color: #999999;
     }
 
         .menu-bar a:hover {
             background-color: #d6b958;
             transition: all .8s;
             color: #333333;
+            text-decoration: none;
         }
 
-    .menu-bar li a::after {
+    .menu-bar li a:after {
         content: '|';
         position: relative;
         left: .5em;
@@ -131,131 +152,6 @@
     background-repeat: no-repeat;
     background-size: 100% auto;
 }
-
-
-/*WIDGET*/
-
-.search-box {
-    display: none;
-}
-
-#sb-1 {
-    position: relative;
-    background-color: #063339;
-    border-top-left-radius: 10px;
-    margin-left: 18%;
-    margin-bottom: 2%;
-    width: 230px;
-    height: 95px;
-}
-
-    #sb-1 span {
-        font-family: Tahoma;
-        font-size: 13px;
-        position: absolute;
-        top: 2px;
-        left: 10px;
-        color: white;
-        font-weight: 600;
-    }
-
-#sb-2 {
-    background-color: #c5eaee;
-    position: absolute;
-    width: 98.5%;
-    height: 80%;
-    right: 0px;
-    bottom: 0px;
-}
-
-.go-btn {
-    position: absolute;
-    background: url("../images/go_btn.png") no-repeat;
-    background-size: cover;
-    top: 7px;
-    right: 20px;
-    width: 25px;
-    height: 25px;
-    border-radius: 20px;
-}
-
-#sb-2 input[type="text"] {
-    position: absolute;
-    top: 10px;
-    left: 5px;
-}
-
-#sb-2 input[type="radio"]:nth-child(2) {
-    margin-left: 5px;
-}
-
-#sb-2 .radio {
-    position: absolute;
-    top: 35px;
-    left: 5px;
-    font-size: 12px;
-    font-family: Tahoma;
-}
-
-#sb-2 span {
-    position: absolute;
-    top: 55px;
-    left: 10px;
-    font-size: 11px;
-    font-weight: 700;
-}
-
-#sb-2 a {
-    color: grey;
-    text-decoration: none;
-}
-
-    #sb-2 a:hover {
-        color: grey;
-        text-decoration: underline;
-    }
-
-#sb-3 {
-    position: relative;
-    background-color: #063339;
-    border-top-left-radius: 10px;
-    margin-left: 18%;
-    width: 230px;
-    height: 75px;
-}
-
-    #sb-3 span {
-        font-family: Tahoma;
-        font-size: 13px;
-        position: absolute;
-        top: 2px;
-        left: 10px;
-        color: white;
-        font-weight: 600;
-    }
-
-#sb-4 {
-    background-color: #c5eaee;
-    position: absolute;
-    width: 98.5%;
-    height: 70%;
-    right: 0px;
-    bottom: 0px;
-}
-
-    #sb-4 .alphabetical {
-        position: absolute;
-        top: 10px;
-        left: 4px;
-        font-size: 13px;
-        font-weight: bold;
-    }
-
-    #sb-4 a {
-        text-decoration: none;
-        color: #20484c;
-        padding-left: 2px;
-    }
 
 
 /*MAIN CONTENT*/
@@ -304,6 +200,7 @@
         display: inline-flex;
         flex-direction: column;
         position: relative;
+        margin: 0 1.5em;
     }
 
     .main-panel .book-attr {
@@ -322,6 +219,7 @@
         position: relative;
         box-sizing: border-box;
         height: 60%;
+        margin-bottom: 1em;
     }
 
         .main-panel .book-illu:hover img {
@@ -332,6 +230,8 @@
         font-size: 1.05em;
         position: relative;
         margin-left: .5em;
+        overflow: hidden;
+        max-height: 3.5em;
     }
 
     .main-panel .book-main .small a {
@@ -343,7 +243,6 @@
     }
 
 .book-main .small a:hover {
-    color: #d6b958;
     background: none;
 }
 
@@ -357,6 +256,7 @@
     margin-top: 15px;
     position: relative;
     margin-left: .5em;
+    padding-bottom: 2em;
 }
 
 .main-panel #tag-list {
@@ -382,6 +282,7 @@
         color: white;
         background-color: #1a1a1a;
         transition: all .5s;
+        text-decoration: none;
     }
 
 
@@ -398,7 +299,7 @@
 
 .book-info {
     box-sizing: border-box;
-    height: 250px;
+    height: 300px;
     width: 100%;
     overflow: hidden;
     position: relative;
@@ -435,32 +336,32 @@
         position: relative;
     }
 
-    .main-panel .book-main .book-name small {
-        font-size: .7em;
-        line-height: 20%;
-        font-weight: normal;
-        margin-top: 200px;
-        top: 0;
-    }
+.main-panel .book-main .book-name small {
+    font-size: .7em;
+    line-height: 20%;
+    font-weight: normal;
+    margin-top: 200px;
+    top: 0;
+}
 
-    .book-main .book-year {
-        color: #999999;
-        font-size: 1em;
-    }
+.book-main .book-year {
+    color: #999999;
+    font-size: 1em;
+}
 
-    .book-main .book-name, .book-main .book-rate {
-        margin: 0;
-    }
+.book-main .book-name, .book-main .book-rate {
+    margin: 0;
+}
 
-    .book-main .book-name {
-        font-size: 2em;
-        font-weight: bold;
-        line-height: 1em;
-    }
+.book-main .book-name {
+    font-size: 1.3em;
+    font-weight: bold;
+    line-height: 1em;
+}
 
-    .book-main .book-rate {
-        font-size: 1em;
-    }
+.book-main .book-rate {
+    font-size: 1em;
+}
 
 #top-book {
     box-sizing: border-box;
@@ -472,19 +373,36 @@
     margin-top: 1em;
 }
 
-.book-main a {
+.book-name > a {
     color: #1a1a1a;
-    border: 1px solid #999999;
-    padding: .5em;
-    top: 1em;
-    position: relative;
-    transition: all .5s;
 }
 
-    .book-main a:hover {
+.book-summary {
+    position: relative;
+} 
+.added {
+    border: 1px solid #999999;
+    padding: .5em;
+    top: 1.25em;
+    color: #1a1a1a;
+    background-color: #999999;
+}
+
+.not-added {
+    border: 1px solid #1a1a1a;
+    padding: .5em;
+    top: 1.25em;
+    color: #1a1a1a;
+    transition: all .3s;
+}
+
+    .not-added:hover {
         background-color: #d6b958;
     }
 
+#top-book li {
+    float: right;
+}
 #top-book .book-name {
     font-size: 1em;
 }
@@ -553,7 +471,7 @@
 /* book tab */
 #book-tab {
     width: 100%;
-    height: 150px;
+    min-height: 150px;
     clear: both;
 }
 

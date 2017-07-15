@@ -1,0 +1,71 @@
+﻿@model OnlineLibrary.Models.Account
+@{
+    var msg = ViewBag.Msg;
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Coc Library</title>
+    <!-- Bootstrap -->
+    <link href="~/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="~/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- PNotify -->
+    <link href="~/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="~/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="~/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/style.css">
+
+
+</head>
+
+<body>
+
+    <!-- Form Mixin-->
+    <!-- Input Mixin-->
+    <!-- Button Mixin-->
+    <!-- Pen Title-->
+    <!-- Form Module-->
+    <div class="module form-module">
+        <div class="toggle">
+            <i class="fa fa-times fa-pencil"></i>
+            <div class="tooltip">Click Me</div>
+        </div>
+        <div class="form">
+            <h2>Login to your account</h2>
+
+            <form method="post" action=@(ViewBag.oldPage!=""?Url.Content($"/Home/Check_login_member?oldPage={ViewBag.oldPage}&title={ViewBag.title}"):Url.Content($"/Home/Check_login_member"))>
+                <input asp-for="Id" type="text" placeholder="Username" />
+                <input asp-for="Password" type="password" placeholder="Password" />
+                <button>Login</button>
+            </form>
+        </div>
+        <div class="cta"><a href="http://andytran.me">Forgot your password?</a></div>
+    </div>
+    <!-- jQuery -->
+    <script src="~/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/js/index.js"></script>
+    <!-- PNotify -->
+    <script src="~/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="~/vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="~/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+    @if (msg != null)
+    {
+        <script>
+        new PNotify({
+            title: 'Login failed!',
+            text: '@msg',
+            type: 'error',
+            styling: 'bootstrap3'
+        });
+        </script>
+    }
+</body>
+
+
+</html>

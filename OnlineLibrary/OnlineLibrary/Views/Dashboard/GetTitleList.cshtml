@@ -1,0 +1,428 @@
+﻿@using OnlineLibrary.Models
+@using Microsoft.AspNetCore.Http;
+@model OnlineLibrary.Models.Title
+@{
+    List<Title> list = ViewBag.result;
+    List<Author> authors = ViewBag.authors;
+    List<ReturnType> returnTypes = ViewBag.returnTypes;
+    List<Category> categories = ViewBag.categories;
+    Title titleBeingViewed = ViewBag.titleBeingViewed;
+    string lastSearchValue = Context.Session.GetString("lastSearchValue");
+
+    Layout = "_Default-dashboard";
+}
+
+@section moreCSS {
+    <!--select2-->
+    <link href="~/vendors/select2/dist/css/select2.min.css" rel="stylesheet" />
+    @*<style>
+            .validate-elem {
+                border: 1px solid #ff5858;
+                box-shadow: 1px 1px 3px rgba(255, 100, 255, 2);
+            }
+        </style>*@
+}
+
+
+
+
+<!-- page content -->
+
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>All titles</h3>
+        </div>
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <form asp-action="SearchTitleList">
+                        <div class="input-group">
+                            <input type="text" name="TitleName" class="form-control">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit">Go</button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <ul class="nav navbar-right panel_toolbox" style="color: black;">
+                    <h4>Today is: @DateTime.Now.ToString("dd/MM/yyyy")</h4>
+                </ul>
+                <div class="x_title">
+                    <div class="clearfix"></div>
+                </div>
+                @{ int i = 1;}
+                <div class="x_content">
+                    <div class="table-responsive">
+                        <table class="table" style="color: black;">
+                            <thead>
+                                <tr style="font-weight: 700;">
+                                    <th>No.</th>
+                                    <th>Name</th>
+                                    <th>Publisher</th>
+                                    <th>Publish Year</th>
+                                    <th>Author</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (Title t in list)
+                                {
+                                    <tr style="font-weight: 700;">
+                                        <td>@i</td>
+                                        <td>
+                                            @t.Name
+                                            @if (t.AvailableQuan == 0)
+                                            {
+                                                <span class="label label-danger">Out of stock</span>
+                                            }
+                                        </td>
+                                        <td>@t.Publisher</td>
+                                        <td>@t.PublishYear</td>
+                                        <td>@t.Author.FirstName @t.Author.LastName</td>
+                                        <td>
+                                            @if (t.AvailableQuan == 0)
+                                            {
+                                                <button type="submit" class="btn btn-success" disabled>View title's books</button>
+                                            }
+                                            else
+                                            {
+                                                <a class="btn btn-success" asp-action="ShowTitleBooks" asp-route-TID="@t.Seq">View title's books</a>
+                                            }
+                                            <a class="btn btn-primary" asp-action="ViewTitle" asp-route-TID="@t.Seq">View title's info</a>
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (list.Count != 0)
+            {
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Title detail</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content" id="edit">
+                        <br />
+                        <form class="form-horizontal form-label-left input_mask" asp-action="TitleCRUD">
+                            @if (titleBeingViewed != null)
+                            {
+                                <input type="hidden" asp-for="Seq" value="@titleBeingViewed.Seq" />
+                            }
+                            <div class="col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
+                                @if (titleBeingViewed != null)
+                                {
+                                    <input type="text" class="form-control has-feedback-left" asp-for="Name" placeholder="Name" value="@titleBeingViewed.Name">
+                                }
+                                else
+                                {
+                                    <input type="text" class="form-control has-feedback-left" asp-for="Name" placeholder="Name">
+                                }
+                                <span class="fa fa-book form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="col-md-5 col-sm-6 col-xs-12">
+                                @if (titleBeingViewed != null)
+                                {
+                                    <input type="text" class="form-control has-feedback-left" asp-for="FullName" placeholder="Full Name" value="@titleBeingViewed.FullName">
+                                }
+                                else
+                                {
+                                    <input type="text" class="form-control has-feedback-left" asp-for="FullName" placeholder="Full Name">
+                                }
+                                <span class="fa fa-book form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="clearfix"></div><br />
+
+                            <div class="col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
+                                @if (titleBeingViewed != null)
+                                {
+                                    <input type="text" class="form-control has-feedback-left validate-elem" asp-for="Publisher" placeholder="Publisher" value="@titleBeingViewed.Publisher">
+                                }
+                                else
+                                {
+                                    <input type="text" class="form-control has-feedback-left validate-elem" asp-for="Publisher" placeholder="Publisher">
+                                }
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="col-md-5 col-sm-6 col-xs-12">
+                                <select class="form-control has-feedback-left validate-elem" asp-for="AuthorId">
+                                    @if (titleBeingViewed != null)
+                                    {
+                                        <option value="">Author</option>
+                                            @foreach (Author a in authors)
+                                            {
+                                                if (titleBeingViewed.AuthorId == a.Id)
+                                                {
+                                                    <option value="@a.Id" selected="selected">@a.FirstName @a.LastName</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@a.Id">@a.FirstName @a.LastName</option>
+                                                }
+
+                                            }
+                                    }
+                                    else
+                                    {
+                                        <option value="">Author</option>
+                                            @foreach (Author a in authors)
+                                            {
+                                                <option value="@a.Id">@a.FirstName @a.LastName</option>
+                                            }
+                                    }
+                                </select>
+                                <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="clearfix"></div><br />
+
+                            <div class="col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
+                                @if (titleBeingViewed != null)
+                                {
+                                    <div class="input-group date" id="myDatepicker">
+                                        <input class="form-control validate-elem" type="text" readonly="readonly" asp-for="PublishYear" value="@titleBeingViewed.PublishYear.Value">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div class="input-group date" id="myDatepicker">
+                                        <input class="form-control validate-elem" type="text" readonly="readonly" placeholder="Publish Year" asp-for="PublishYear">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="col-md-5 col-sm-6 col-xs-12">
+                                @if (titleBeingViewed != null)
+                                {
+                                    <input type="text" class="form-control has-feedback-left validate-elem" asp-for="Isbn" placeholder="ISBN" value="@titleBeingViewed.Isbn">
+                                }
+                                else
+                                {
+                                    <input type="text" class="form-control has-feedback-left validate-elem" asp-for="Isbn" placeholder="ISBN">
+                                }
+                                <span class="fa fa-barcode form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="clearfix"></div><br />
+
+                            <div class="col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
+                                @if (titleBeingViewed != null)
+                                {
+                                    <input type="text" class="form-control has-feedback-left validate-elem" asp-for="AvailableQuan" placeholder="Quantity" value="@titleBeingViewed.AvailableQuan">
+                                }
+                                else
+                                {
+                                    <input type="text" class="form-control has-feedback-left validate-elem" asp-for="AvailableQuan" placeholder="Quantity">
+                                }
+                                <span class="fa fa-list-ol form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="col-md-5 col-sm-6 col-xs-12">
+                                @if (titleBeingViewed != null)
+                                {
+                                    <input type="text" class="form-control has-feedback-left validate-elem" asp-for="Illu" placeholder="Cover Image" value="@titleBeingViewed.Illu">
+                                }
+                                else
+                                {
+                                    <input type="text" class="form-control has-feedback-left validate-elem" asp-for="Illu" placeholder="Cover Image">
+                                }
+                                <span class="fa fa-file-image-o form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="clearfix"></div><br />
+
+                            <div class="col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
+                                <select class="form-control has-feedback-left validate-elem" asp-for="ReturnType">
+                                    @if (titleBeingViewed != null)
+                                    {
+                                        <option value="">Return Type</option>
+                                            @foreach (ReturnType rt in returnTypes)
+                                            {
+                                                if (titleBeingViewed.ReturnType == rt.Seq)
+                                                {
+                                                    <option value="@rt.Seq" selected="selected">@rt.NoOfDay days</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@rt.Seq">@rt.NoOfDay days</option>
+                                                }
+
+                                            }
+                                    }
+                                    else
+                                    {
+                                        <option value="">Return Type</option>
+                                            @foreach (ReturnType rt in returnTypes)
+                                            {
+                                                <option value="@rt.Seq">@rt.NoOfDay days</option>
+                                            }
+                                    }
+                                </select>
+                                <span class="fa fa-list-ul form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+
+                            <div class="clearfix"></div><br />
+
+                            <div class="col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
+                                <textarea type="text" class="form-control" asp-for="Description" placeholder="Description" rows="8"></textarea>
+                            </div>
+
+                            <div class="col-md-5 col-sm-6 col-xs-12">
+                                <select class="form-control has-feedback-left categories validate-elem" name="categories" multiple="multiple">
+                                    @if (titleBeingViewed != null)
+                                    {
+                                        List<Category> compare = new List<Category>();
+                                        foreach (TitleCategoryDetail tcd in titleBeingViewed.TitleCategoryDetail)
+                                        {
+                                            compare.Add(tcd.Category);
+                                        }
+                                        foreach (Category c in categories)
+                                        {
+                                            if (!compare.Contains(c))
+                                            {
+                                                <option value="@c.Seq">@c.Name</option>
+                                            }
+                                        }
+                                        foreach (TitleCategoryDetail tcd in titleBeingViewed.TitleCategoryDetail)
+                                        {
+                                            <option value="@tcd.Category.Seq" selected="selected">@tcd.Category.Name</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        foreach (Category c in categories)
+                                        {
+                                            <option value="@c.Seq">@c.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div>
+                                    <button type="submit" class="btn btn-success btnValidate" name="btnAction" value="create">Create title</button>
+                                    <button type="submit" class="btn btn-warning btnValidate" name="btnAction" value="update">Update title</button>
+                                    <input type="button" class="btn btn-info" onclick="blank_form()" value="Reset" />
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section scripts {
+    <!--moment-->
+    <script src="~/vendors/moment/min/moment.min.js"></script>
+    <!--datepicker-->
+    <script src="~/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <!--select2-->
+    <script src="~/vendors/select2/dist/js/select2.min.js"></script>
+
+    <script>
+
+        $(".categories").select2({
+            placeholder: 'Tags',
+        });
+
+        $('#myDatepicker').datetimepicker({
+            ignoreReadonly: true,
+            allowInputToggle: true,
+            format: 'YYYY'
+        });
+
+        window.onload = function () {
+
+            var empty = false;
+            $('.validate-elem').each(function () {
+                if ($(this).val() == '' || $(this).val() == null) {
+                    empty = true;
+                }
+            });
+
+            if (empty) {
+                $('.btnValidate').prop('disabled', true);
+            } else {
+                $('.btnValidate').prop('disabled', false);
+            }
+
+
+            @if (titleBeingViewed != null)
+            {
+                @:var elem = document.getElementById("Description").innerHTML = '@titleBeingViewed.Description'
+                @:$("html, body").animate({ scrollTop: $(document).height() - $(window).height() });
+            }
+        };
+
+        $('.validate-elem').on('keyup change', function () {
+            var empty = false;
+            $('.validate-elem').each(function () {
+                if ($(this).val() == '' || $(this).val() == null) {
+                    empty = true;
+                }
+            });
+
+            if (empty) {
+                $('.btnValidate').prop('disabled', true);
+            } else {
+                $('.btnValidate').prop('disabled', false);
+            }
+        });
+
+
+        function blank_form() {
+            document.getElementById("Name").value = "";
+            document.getElementById("FullName").value = "";
+            document.getElementById("Publisher").value = "";
+            document.getElementById("PublishYear").value = "";
+            document.getElementById("Isbn").value = "";
+            document.getElementById("AvailableQuan").value = "";
+            document.getElementById("Description").innerHTML = "";
+
+            var empty = false;
+            $('.validate-elem').each(function () {
+                if ($(this).val() == '' || $(this).val() == null) {
+                    empty = true;
+                }
+            });
+
+            if (empty) {
+                $('.btnValidate').prop('disabled', true);
+            } else {
+                $('.btnValidate').prop('disabled', false);
+            }
+        }
+    </script>
+    <!-- Custom Theme Scripts -->
+    <script src="~/build/js/custom.min.js"></script>
+}

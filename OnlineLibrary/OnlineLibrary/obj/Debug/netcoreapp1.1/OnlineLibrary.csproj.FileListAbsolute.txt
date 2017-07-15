@@ -2,8 +2,8 @@ D:\FinalCS\master2\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLib
 D:\FinalCS\master2\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLibrary.runtimeconfig.json
 D:\FinalCS\master2\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLibrary.runtimeconfig.dev.json
 D:\FinalCS\master2\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLibrary.dll
-D:\FinalCS\master2\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.csprojResolveAssemblyReference.cache
 D:\FinalCS\master2\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.AssemblyInfo.cs
 D:\FinalCS\master2\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLibrary.pdb
 D:\FinalCS\master2\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.dll
 D:\FinalCS\master2\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.pdb
+D:\FinalCS\master2\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.csprojResolveAssemblyReference.cache

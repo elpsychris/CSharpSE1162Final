@@ -1,0 +1,242 @@
+﻿@model OnlineLibrary.Models.UpdateInfo
+@using OnlineLibrary.Models;
+@{
+    List<FavoriteList> resultList = (List<FavoriteList>)ViewBag.ResultList;
+    var accountInfo = ViewBag.AccountInfo;
+    List<ActivityHistory> activityList = ViewBag.ActivityList;
+    var curAcc = ViewBag.CurAcc;
+    Layout = "_Default";
+    
+
+    var tempAvatar = ViewBag.TempFile!=null?$"~/temp/{ViewBag.TempFile}":$"~/images/{Model.Avatar}";
+}
+
+@section moreCSS {
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- bootstrap-datetimepicker -->
+    <link href="../vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="../build/css/custom.min.css" rel="stylesheet">
+    <style>
+        tr:hover:not(.lated) {
+            background: rgba(153,153,153,.2) !important;
+        }
+
+        .lated {
+            background: rgba(220,40,50,.3);
+            color: white;
+        }
+
+            .lated:hover {
+                color: #1a1a1a;
+                background: rgba(220,40,50,.5) !important;
+            }
+
+        #upload {
+            display: none
+        }
+    </style>
+
+
+
+}
+<div class="main-panel">
+    <div class="profile-wrapper">
+        <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+            <div class="thumbnail" style="height: 18vw; width: 18vw;">
+                <div class="image view view-first" style="height: 100%">
+                    <img style="height: 100%; display: block; width: 100%" class="img-responsive avatar-view" src=@Url.Content($"{tempAvatar}") alt="Avatar" title="Change the avatar">
+                    <div class="mask" style="height: 100%">
+                        <p>Edit your profile</p>
+                        <div class="tools tools-bottom" style="width:100%; bottom:-2vw;">
+                            <a id="upload_link"><i class="fa fa-pencil"></i></a>
+                            <a href="#"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <div class="x_content">
+                <br />
+                <form id="form-update" method="post" enctype="multipart/form-data" asp-action="Update_UInfo" class="form-horizontal form-label-left input_mask">
+                    <input asp-for="Id" type="hidden">
+                    <input asp-for="Seq" type="hidden">
+                    <input id="sex" asp-for="Gender" type="hidden">
+                    <input asp-for="Avatar" type="hidden" value='@($"{ViewBag.TempFile??Model.Avatar}")'>
+                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input asp-for="FirstName" type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="First Name" value="@(Model.FirstName)">
+                        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input asp-for="LastName" type="text" class="form-control" id="inputSuccess3" placeholder="Last Name" value="@(Model.LastName)">
+                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input asp-for="Email" type="text" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Email" value="@(Model.Email)">
+                        <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                        <input asp-for="Phone" type="text" class="form-control" id="inputSuccess5" placeholder="Phone" value="@(Model.Phone)">
+                        <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <div class="btn-group">
+                                <button id="M" class="btn btn-default sex-group" type="button">M</button>
+                                <button id="F" class="btn btn-default sex-group" type="button">F</button>
+                                <button id="G" class="btn btn-default sex-group" type="button">G</button>
+                                <button id="L" class="btn btn-default sex-group" type="button">L</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Id" class="control-label col-md-3 col-sm-3 col-xs-12">Member ID</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input asp-for="Id" type="text" class="form-control" disabled="disabled" placeholder="Disabled Input" value="@(Model.Id)">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Address
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input asp-for="Address" class="date-picker form-control col-md-7 col-xs-12" type="text" value="@(Model.Address)">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Date Of Birth <span class="required">*</span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(m => m.Dob, "{0:dd/MM/yyyy}", new { @class = "date-picker form-control col-md-7 col-xs-12", @id = "inputSuccess5" })
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Password <span class="required">*</span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input id="password" asp-for="Password" class="date-picker form-control col-md-7 col-xs-12" required="required" type="password">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Password Confirm <span class="required">*</span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input id="confirm" class="date-picker form-control col-md-7 col-xs-12" required="required" type="password">
+                        </div>
+                    </div>
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                        <div id="" class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                            <button asp-action="Get_Fav" type="button" class="btn btn-primary">Cancel</button>
+                            <button class="btn btn-primary" type="reset">Reset</button>
+                            <button id="submitBtn" type="button" class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+                    <input id="upload" type="file" name="file" />
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section scripts {
+    <!-- FastClick -->
+    <script src="../vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="../vendors/nprogress/nprogress.js"></script>
+    <!-- iCheck -->
+    <script src="../vendors/iCheck/icheck.min.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="../vendors/moment/min/moment.min.js"></script>
+    <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap-datetimepicker -->
+    <script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="../build/js/custom.min.js"></script>
+    <script>
+        var curSex='@Model.Gender';
+        $(document).ready(function () {
+            $(function () {
+                $("#upload_link").on('click', function (e) {
+                    e.preventDefault();
+                    $("#upload:hidden").trigger('click');
+                });
+
+                $("#" + curSex).button("toggle");
+            })
+        });
+        $('.sex-group').click(function () {
+            $(this).addClass('active').siblings().removeClass('active');
+            curSex = $(this).attr("id");
+            // TODO: insert whatever you want to do with $(this) here
+        });
+
+        $('#submitBtn').on("click", function() {
+            var password = $('#password').val();
+            var confirm = $('#confirm').val();
+            if (password !== confirm) {
+                $('#password').val("");
+                $('#confirm').val("");
+                $('#password').focus();
+                new PNotify({
+                    title: 'Submit failed!',
+                    text: 'Password is not confirmed',
+                    type: 'error',
+                    styling: 'bootstrap3'
+                });
+                return;
+            }
+            if (!password.trim()) {
+                $('#confirm').val("");
+                $('#password').focus();
+                new PNotify({
+                    title: 'Submit failed!',
+                    text: 'Password is empty',
+                    type: 'error',
+                    styling: 'bootstrap3'
+                });
+                return;
+            }
+
+            $('#sex').attr("value", curSex);
+            $('#form-update').submit();
+        });
+
+        $('#upload').on("change", function() {
+            var type = $("<input>").attr("type", "hidden")
+                .attr("name", "typeSubmit").val("Temp");
+
+            $('#sex').attr("value", curSex);
+            $('#form-update').append(type);
+            $('#form-update').submit();
+        });
+        
+    </script>
+
+    
+}

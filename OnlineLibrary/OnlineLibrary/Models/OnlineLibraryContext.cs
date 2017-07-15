@@ -15,6 +15,7 @@ namespace OnlineLibrary.Models
         public virtual DbSet<FavoriteList> FavoriteList { get; set; }
         public virtual DbSet<FineHistory> FineHistory { get; set; }
         public virtual DbSet<FineType> FineType { get; set; }
+        public virtual DbSet<Rating> Rating { get; set; }
         public virtual DbSet<ReturnType> ReturnType { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Title> Title { get; set; }
@@ -195,20 +196,30 @@ namespace OnlineLibrary.Models
 
                 entity.ToTable("Favorite_List");
 
+                entity.HasIndex(e => new { e.TitleId, e.MemberId })
+                    .HasName("UQ__Favorite__E5BA8D548BAAB4A1")
+                    .IsUnique();
+
                 entity.Property(e => e.Seq).HasColumnName("SEQ");
 
-                entity.Property(e => e.MemberId).HasColumnName("MemberID");
+                entity.Property(e => e.MemberId)
+                    .IsRequired()
+                    .HasColumnName("MemberID");
 
-                entity.Property(e => e.TitleId).HasColumnName("TitleID");
+                entity.Property(e => e.TitleId)
+                    .IsRequired()
+                    .HasColumnName("TitleID");
 
                 entity.HasOne(d => d.Member)
                     .WithMany(p => p.FavoriteList)
                     .HasForeignKey(d => d.MemberId)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_FL_M");
 
                 entity.HasOne(d => d.Title)
                     .WithMany(p => p.FavoriteList)
                     .HasForeignKey(d => d.TitleId)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_Favorite_List_Title");
             });
 
@@ -219,22 +230,15 @@ namespace OnlineLibrary.Models
 
                 entity.ToTable("Fine_History");
 
-                entity.HasIndex(e => e.Aseq)
-                    .HasName("UQ__Fine_His__4DF639F196DD5AEC")
-                    .IsUnique();
-
                 entity.Property(e => e.Seq).HasColumnName("SEQ");
 
-                entity.Property(e => e.Aseq)
-                    .IsRequired()
-                    .HasColumnName("ASEQ");
+                entity.Property(e => e.Aseq).HasColumnName("ASEQ");
 
                 entity.Property(e => e.FineTypeId).HasColumnName("FineTypeID");
 
                 entity.HasOne(d => d.AseqNavigation)
-                    .WithOne(p => p.FineHistory)
-                    .HasForeignKey<FineHistory>(d => d.Aseq)
-                    .OnDelete(DeleteBehavior.Restrict)
+                    .WithMany(p => p.FineHistory)
+                    .HasForeignKey(d => d.Aseq)
                     .HasConstraintName("FK_LR_AH");
 
                 entity.HasOne(d => d.FineType)
@@ -254,6 +258,38 @@ namespace OnlineLibrary.Models
                 entity.Property(e => e.Description).HasColumnType("varchar(500)");
 
                 entity.Property(e => e.FineTypeName).HasColumnType("varchar(50)");
+            });
+
+            modelBuilder.Entity<Rating>(entity =>
+            {
+                entity.HasKey(e => e.RateId)
+                    .HasName("PK_Rating");
+
+                entity.HasIndex(e => new { e.Mseq, e.TitleSeq })
+                    .HasName("UNQ_CAN_KEY")
+                    .IsUnique();
+
+                entity.Property(e => e.RateId).HasColumnName("RateID");
+
+                entity.Property(e => e.Mseq)
+                    .IsRequired()
+                    .HasColumnName("MSeq");
+
+                entity.Property(e => e.Rating1).HasColumnName("Rating");
+
+                entity.Property(e => e.TitleSeq).IsRequired();
+
+                entity.HasOne(d => d.MseqNavigation)
+                    .WithMany(p => p.Rating)
+                    .HasForeignKey(d => d.Mseq)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_Rating_Account");
+
+                entity.HasOne(d => d.TitleSeqNavigation)
+                    .WithMany(p => p.RatingNavigation)
+                    .HasForeignKey(d => d.TitleSeq)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_Rating_Title");
             });
 
             modelBuilder.Entity<ReturnType>(entity =>

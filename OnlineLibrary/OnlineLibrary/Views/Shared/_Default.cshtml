@@ -1,0 +1,208 @@
+﻿@using OnlineLibrary.Models
+@{
+    var curAcc = ViewBag.CurAcc;
+    MsgObject msg = ViewBag.msg;
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Main Page</title>
+    <link href="~/css/index-style-mobile.css" rel="stylesheet" media="screen and (max-width: 799px)" />
+    <link href="~/css/index-style.css" media="screen and (min-width: 800px)" rel="stylesheet" />
+    <!-- Bootstrap -->
+    <link href="~/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- PNotify -->
+    <link href="~/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="~/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="~/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+
+    <!-- Select2 -->
+    <link href="~/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+    <!-- Switchery -->
+    <link href="~/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <!-- starrr -->
+    <link href="~/vendors/starrr/dist/starrr.css" rel="stylesheet">
+
+    @RenderSection("moreCSS", required: false)
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo"></div>
+
+        <div style="display: inline-block; position: absolute; left: 30vw; top: 8px;">
+            <form method="post" id="searchForm" action="/Home/Search">
+                <div class="input-group" style="width: 40vw">
+                    <input name="searchVal" type="text" class="form-control" aria-label="Text input with dropdown button">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Search By <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li>
+                                <a class="searchBtn">Title</a>
+                            </li>
+                            <li>
+                                <a class="searchBtn">Author</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /btn-group -->
+                </div>
+            </form>
+        </div>
+
+        <div class="login-right">
+
+            @if (curAcc != null)
+            {
+                <a asp-action="Get_Fav"><img id="icon" src=@Url.Content($"~/images/{curAcc["Avatar"]}") /></a>
+                <a asp-action="Logout">
+                    <b>
+                        (Logout)
+                    </b>
+                </a>
+                <a asp-action="Get_Fav">
+                    <b>@curAcc["FirstName"]&nbsp;</b>
+                </a>
+
+            }
+            else
+            {
+                <a asp-action="Login_member"><b>Login</b><img id="icon" src="~/images/default_icon.png" /></a>
+
+            }
+
+        </div>
+        <div class="menu-bar">
+            <ul>
+                <li class="menu-child"><a asp-action="Index">Home</a></li>
+                <li class="menu-child"><a href="#">Resources</a></li>
+                <li class="menu-child"><a href="#">About Us</a></li>
+            </ul>
+        </div>
+    </div>
+    @RenderSection("banner", required: false)
+
+    <!--CONTENT-->
+    <div id="main-content">
+        @RenderBody()
+    </div>
+    <!--FOOTER-->
+    <div id="footer-upper">
+        <div class="upper-half">
+            <div class="group-list">
+                <div>Library A-Z</div>
+                <ul>
+                    <li>Apple & iOS</li>
+                    <li>Game Development</li>
+                    <li>Software Development</li>
+                    <li>Enterprise Software</li>
+                    <li>Machine Learning</li>
+                </ul>
+            </div>
+
+            <div class="group-list">
+                <div>Services</div>
+                <ul>
+                    <li>About Us</li>
+                    <li>Academics</li>
+                    <li>Scholarship</li>
+                    <li>Source Code</li>
+                    <li>Events</li>
+                </ul>
+            </div>
+        </div>
+        <div class="upper-half">
+            <div class="group-list">
+                <div>Linked page</div>
+                <ul>
+                    <li>FPT Uniap</li>
+                    <li>FPT LMS</li>
+                    <li>FPT University</li>
+                    <li>Chungta.vn</li>
+                </ul>
+            </div>
+
+
+            <div class="group-list">
+                <div>&nbsp;</div>
+                <ul>
+                    <li><img src="~/images/visa.png" /></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <div id="mark-logo"></div>
+        <div class="e-footer">© 2017 CocLib</div>
+        <div class="e-footer">Terms & Condition</div>
+        <div class="e-footer">Find us</div>
+        <div class="e-footer"><a asp-action="Login_admin">Admin Panel</a></div>
+    </div>
+    <!-- jQuery -->
+    <script src="~/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/js/index.js"></script>
+    <!-- PNotify -->
+    <script src="~/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="~/vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="~/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".searchBtn").click(function () {
+                var input = $("<input>").attr("type", "hidden")
+                    .attr("name", "searchBy").val($(this).text());
+                $(this).append($(input));
+                $("#searchForm").submit();
+            })
+        })
+    </script>
+
+    @RenderSection("scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            $('.ui-pnotify').remove();
+        });
+    </script>
+    @if (msg != null)
+    {
+        if (msg.msgCode == -1)
+        {
+            <script>
+                setTimeout(function () {
+                    new PNotify({
+                        title: 'Submit failed!',
+                        text: '@msg.msg',
+                        type: 'error',
+                        styling: 'bootstrap3'
+                    });
+
+                }, 2000);
+                
+            </script>
+        }
+        else
+        {
+            <script>
+                setTimeout(function () {
+                    new PNotify({
+                        title: 'Submit successfully!',
+                        text: '@msg.msg',
+                        type: 'success',
+                        styling: 'bootstrap3'
+                    });
+
+                }, 2000);
+
+            </script>
+
+        }
+
+    }
+</body>
+
+</html>

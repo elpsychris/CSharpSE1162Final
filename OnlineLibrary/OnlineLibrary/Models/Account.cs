@@ -9,6 +9,7 @@ namespace OnlineLibrary.Models
         {
             ActivityHistory = new HashSet<ActivityHistory>();
             FavoriteList = new HashSet<FavoriteList>();
+            Rating = new HashSet<Rating>();
         }
 
         public int Seq { get; set; }
@@ -27,6 +28,7 @@ namespace OnlineLibrary.Models
 
         public virtual ICollection<ActivityHistory> ActivityHistory { get; set; }
         public virtual ICollection<FavoriteList> FavoriteList { get; set; }
+        public virtual ICollection<Rating> Rating { get; set; }
         public virtual Role R { get; set; }
     }
 }

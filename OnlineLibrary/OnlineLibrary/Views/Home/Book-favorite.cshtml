@@ -2,18 +2,13 @@
 @{
     List<FavoriteList> resultList = (List<FavoriteList>)ViewBag.ResultList;
     var accountInfo = ViewBag.AccountInfo;
-    var activityList = ViewBag.ActivityList;
+    List<ActivityHistory> activityList = ViewBag.ActivityList;
+    Layout = "_Default";
+    MsgObject msg = ViewBag.msg;
 }
-<!DOCTYPE html>
-<html>
 
-<head>
-    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Main Page</title>
-    <link href="../css/index-style-mobile.css" rel="stylesheet" media="screen and (max-width: 799px)" />
-    <link href="../css/index-style.css" media="screen and (min-width: 800px)" rel="stylesheet" />
-    <!-- Bootstrap -->
-    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+@section moreCSS {
     <!-- Font Awesome -->
     <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
@@ -23,244 +18,183 @@
 
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
-</head>
+    <style>
+        tr:hover:not(.lated) {
+            background: rgba(153,153,153,.2) !important;
+        }
 
-<body>
-    <div class="header">
-        <div class="logo"></div>
-        <div class="login-right">
-            <a href="#"><b>Login / Register</b></a>
-        </div>
-        <div class="menu-bar">
-            <ul>
-                <li class="menu-child"><a href="#">Publications</a></li>
-                <li class="menu-child"><a href="#">Browse By Subject</a></li>
-                <li class="menu-child"><a href="#">Resources</a></li>
-                <li class="menu-child"><a href="#">About Us</a></li>
+        .lated {
+            background: rgba(220,40,50,.3);
+            color: white;
+        }
+
+            .lated:hover {
+                color: #1a1a1a;
+                background: rgba(220,40,50,.5) !important;
+            }
+    </style>
+
+}
+<div class="main-panel">
+    <div class="profile-wrapper">
+        <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+            <div class="profile_img">
+                <div id="crop-avatar">
+                    <!-- Current avatar -->
+                    <img class="img-responsive avatar-view" src=@Url.Content(@"~/images/"+accountInfo.Avatar) alt="Avatar" title="Change the avatar">
+                </div>
+            </div>
+            <h3>@accountInfo.FirstName @accountInfo.LastName</h3>
+
+            <ul class="list-unstyled user_data">
+                <li>
+                    <i class="fa fa-map-marker user-profile-icon"></i>&nbsp;@accountInfo.Address
+                </li>
+
+                <li>
+                    <i class="fa fa-suitcase user-profile-icon"></i>&nbsp;@accountInfo.R.Name
+                </li>
+
+                <li class="m-top-xs">
+                    <i class="fa fa-envelope user-profile-icon"></i>
+                    <a href="@accountInfo.Email" target="_blank">&nbsp;@accountInfo.Email</a>
+                </li>
             </ul>
+
+            <a class="btn btn-success" asp-action="User_Modify"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
+            <br />
+
+
+
         </div>
-    </div>
 
-    <!--CONTENT-->
-    <div id="main-content">
-        <div class="main-panel">
-            <div class="profile-wrapper">
-                <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
-                    <div class="profile_img">
-                        <div id="crop-avatar">
-                            <!-- Current avatar -->
-                            <img class="img-responsive avatar-view" src=@Url.Content(@"~/images/"+accountInfo.Avatar) alt ="Avatar" title="Change the avatar">
-                        </div>
-                    </div>
-                    <h3>@accountInfo.FirstName @accountInfo.LastName</h3>
 
-                    <ul class="list-unstyled user_data">
-                        <li>
-                            <i class="fa fa-map-marker user-profile-icon"></i> @accountInfo.Address
+
+
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <div id="book-tab">
+                <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                    <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#tab_content1" role="tab" data-toggle="tab" aria-expanded="true">Activities</a>
                         </li>
-
-                        <li>
-                            <i class="fa fa-suitcase user-profile-icon"></i> @accountInfo.R.Name
-                        </li>
-
-                        <li class="m-top-xs">
-                            <i class="fa fa-envelope user-profile-icon"></i>
-                            <a href="@accountInfo.Email" target="_blank">@accountInfo.Email</a>
+                        <li role="presentation" class="">
+                            <a href="#tab_content2" role="tab" data-toggle="tab" aria-expanded="false">My Favorite List</a>
                         </li>
                     </ul>
+                    <div id="myTabContent" class="tab-content" style="clear: both">
+                        <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+                            <h2>Borrowing Books</h2>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Act.Number</th>
+                                        <th>Book ID</th>
+                                        <th>Title</th>
+                                        <th>Date Borrowed</th>
+                                        <th>ETR</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < activityList.Count(); i++)
+                                    {
+                                        ActivityHistory act = activityList[i];
+                                        int? daysLeft = (DateTime.Now - (DateTime)act.BorrowDate).Days - act.B.TitleNavigation.ReturnTypeNavigation.NoOfDay;
 
-                    <a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
-                    <br />
-
-
-
-                </div>
-
-
-
-
-                <div class="col-md-9 col-sm-9 col-xs-12">
-                    <div id="book-tab">
-                        <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                            <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                                <li role="presentation" class="active">
-                                    <a href="#tab_content1" role="tab" data-toggle="tab" aria-expanded="true">Activities</a>
-                                </li>
-                                <li role="presentation" class="">
-                                    <a href="#tab_content2" role="tab" data-toggle="tab" aria-expanded="false">My Favorite List</a>
-                                </li>
-                            </ul>
-                            <div id="myTabContent" class="tab-content" style="clear: both">
-                                <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
-                                    <h2>Borrowing Books</h2>
-                                    <table class="table table-hover">
-                                        <thead>
+                                        <tr @(daysLeft < 0 ? @"class=lated" : "") @(act.ReturnDate != null ? @"style='background: #999999;color: black'" : "")>
+                                            <th scope="row">@(i + 1)</th>
+                                            <td>@act.Seq</td>
+                                            <td>@act.Bid</td>
+                                            <td>@act.B.TitleNavigation.Name</td>
+                                            <td>@act.BorrowDate</td>
+                                            <td>@((daysLeft < 0) ? $@"Late {-daysLeft} day(s)" : $@"{daysLeft} day(s)")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <br />
+                            <h2>Fine History</h2>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Act.Num</th>
+                                        <th>Book ID</th>
+                                        <th>Book Title</th>
+                                        <th>Fine Amount</th>
+                                        <th>Reason</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < activityList.Count(); i++)
+                                    {
+                                        ActivityHistory act = activityList[i];
+                                        for (int j = 0; j < act.FineHistory.Count(); j++)
+                                        {
+                                            FineHistory fineHist = act.FineHistory.ElementAt(j);
                                             <tr>
-                                                <th>#</th>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
-                                                <th>Username</th>
+                                                <th scope="row">@(i + j + 1)</th>
+                                                <td>@act.Seq</td>
+                                                <td>@act.Bid</td>
+                                                <td>@act.B.TitleNavigation.Name</td>
+                                                <td>@fineHist.FineAmount</td>
+                                                <td>@fineHist.FineType.FineTypeName</td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>mdo</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td>Jacob</td>
-                                                <td>Thornton</td>
-                                                <td>fat</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">3</th>
-                                                <td>Larry</td>
-                                                <td>the Bird</td>
-                                                <td>twitter</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <br />
-                                    <h2>All Activities</h2>
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
-                                                <th>Username</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>mdo</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">2</th>
-                                                <td>Jacob</td>
-                                                <td>Thornton</td>
-                                                <td>fat</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">3</th>
-                                                <td>Larry</td>
-                                                <td>the Bird</td>
-                                                <td>twitter</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>ID</th>
-                                                <th>Title</th>
-                                                <th>Author</th>
-                                                <th>Publisher</th>
-                                                <th>Year</th>
-                                                <th>ISBN</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @for(int i= 0; i < resultList.Count();i++)
-                                            {
-                                                FavoriteList resultE = resultList[i];
-                                                <tr>
-                                                    <th scope="row">@i</th>
-                                                    <td>@resultE.TitleId</td>
-                                                    <td>@resultE.Title.Name @resultE.Title.FullName</td>
-                                                    <td>@resultE.Title.Author</td>
-                                                    <td>@resultE.Title.Publisher</td>
-                                                    <td>@resultE.Title.PublishYear</td>
-                                                    <td>@resultE.Title.Isbn</td>
-                                                </tr>
-    }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>ID</th>
+                                        <th>Title</th>
+                                        <th>Author</th>
+                                        <th>Publisher</th>
+                                        <th>Year</th>
+                                        <th>ISBN</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < resultList.Count(); i++)
+                                    {
+                                        FavoriteList resultE = resultList[i];
+                                        <tr>
+                                            <th scope="row">@i</th>
+                                            <td>@resultE.TitleId</td>
+                                            <td>@resultE.Title.Name @resultE.Title.FullName</td>
+                                            <td>@resultE.Title.Author</td>
+                                            <td>@resultE.Title.Publisher</td>
+                                            <td>@resultE.Title.PublishYear</td>
+                                            <td>@resultE.Title.Isbn</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-
-
                 </div>
             </div>
 
+
         </div>
     </div>
-    <!--FOOTER-->
-    <div id="footer-upper">
-        <div class="upper-half">
-            <div class="group-list">
-                <div>Library A-Z</div>
-                <ul>
-                    <li>Apple & iOS</li>
-                    <li>Game Development</li>
-                    <li>Software Development</li>
-                    <li>Enterprise Software</li>
-                    <li>Machine Learning</li>
-                </ul>
-            </div>
 
-            <div class="group-list">
-                <div>Services</div>
-                <ul>
-                    <li>About Us</li>
-                    <li>Academics</li>
-                    <li>Scholarship</li>
-                    <li>Source Code</li>
-                    <li>Events</li>
-                </ul>
-            </div>
-        </div>
-        <div class="upper-half">
-            <div class="group-list">
-                <div>Linked page</div>
-                <ul>
-                    <li>FPT Uniap</li>
-                    <li>FPT LMS</li>
-                    <li>FPT University</li>
-                    <li>Chungta.vn</li>
-                </ul>
-            </div>
+</div>
+@section scripts {
+    <!-- FastClick -->
+    <script src="../vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="../vendors/nprogress/nprogress.js"></script>
+    <!-- iCheck -->
+    <script src="../vendors/iCheck/icheck.min.js"></script>
 
+    <!-- Custom Theme Scripts -->
+    <script src="../build/js/custom.min.js"></script>
+    
+}
 
-            <div class="group-list">
-                <div>&nbsp;</div>
-                <ul>
-                    <li><img src="..\images\visa.png" /></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div id="footer">
-        <div id="mark-logo"></div>
-        <div class="e-footer">© 2017 CocLib</div>
-        <div class="e-footer">Terms & Condition</div>
-        <div class="e-footer">Find us</div>
-    </div>
-</body>
-
-<!-- jQuery -->
-<script src="../vendors/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap -->
-<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- FastClick -->
-<script src="../vendors/fastclick/lib/fastclick.js"></script>
-<!-- NProgress -->
-<script src="../vendors/nprogress/nprogress.js"></script>
-<!-- iCheck -->
-<script src="../vendors/iCheck/icheck.min.js"></script>
-
-<!-- Custom Theme Scripts -->
-<script src="../build/js/custom.min.js"></script>
-
-</html>

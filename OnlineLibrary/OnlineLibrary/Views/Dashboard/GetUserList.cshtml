@@ -1,0 +1,667 @@
+﻿@using OnlineLibrary.Models
+@using Microsoft.AspNetCore.Http;
+@model OnlineLibrary.Models.Account
+@{
+    List<Account> list = ViewBag.result;
+    List<Role> roles = ViewBag.roles;
+    Account accountBeingViewed = ViewBag.accountBeingViewed;
+    Dictionary<string, string> genders = new Dictionary<string, string> { { "M", "Male" }, { "F", "Female" }, { "L", "Lesbian" }, { "G", "Gay" }, { "B", "Bisexual" }, { "T", "Transgender" } };
+    string lastSearchValue = Context.Session.GetString("lastSearchValue");
+    UserErrorObject ueobj = Context.Session.Get<UserErrorObject>("UserErrorObject");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Gentelella Alela! | </title>
+
+    <!-- Bootstrap -->
+    <link href="~/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="~/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="~/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="~/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-datetimepicker-->
+    <link href="~/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="~/build/css/custom.min.css" rel="stylesheet">
+
+    @*<style>
+            .validate-elem {
+                border: 1px solid #ff5858;
+                box-shadow: 1px 1px 3px rgba(255, 100, 255, 2);
+            }
+        </style>*@
+
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            <img src="~/images/Tuan.png" alt="~." class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            <h2>John Doe</h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <h3>General</h3>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="index.html">Dashboard</a></li>
+                                        <li><a href="index2.html">Dashboard2</a></li>
+                                        <li><a href="index3.html">Dashboard3</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="form.html">General Form</a></li>
+                                        <li><a href="form_advanced.html">Advanced Components</a></li>
+                                        <li><a href="form_validation.html">Form Validation</a></li>
+                                        <li><a href="form_wizards.html">Form Wizard</a></li>
+                                        <li><a href="form_upload.html">Form Upload</a></li>
+                                        <li><a href="form_buttons.html">Form Buttons</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-desktop"></i> UI Elements <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="general_elements.html">General Elements</a></li>
+                                        <li><a href="media_gallery.html">Media Gallery</a></li>
+                                        <li><a href="typography.html">Typography</a></li>
+                                        <li><a href="icons.html">Icons</a></li>
+                                        <li><a href="glyphicons.html">Glyphicons</a></li>
+                                        <li><a href="widgets.html">Widgets</a></li>
+                                        <li><a href="invoice.html">Invoice</a></li>
+                                        <li><a href="inbox.html">Inbox</a></li>
+                                        <li><a href="calendar.html">Calendar</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="tables.html">Tables</a></li>
+                                        <li><a href="tables_dynamic.html">Table Dynamic</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="chartjs.html">Chart JS</a></li>
+                                        <li><a href="chartjs2.html">Chart JS2</a></li>
+                                        <li><a href="morisjs.html">Moris JS</a></li>
+                                        <li><a href="echarts.html">ECharts</a></li>
+                                        <li><a href="other_charts.html">Other Charts</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-clone"></i>Layouts <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
+                                        <li><a href="fixed_footer.html">Fixed Footer</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="menu_section">
+                            <h3>Live On</h3>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="e_commerce.html">E-commerce</a></li>
+                                        <li><a href="projects.html">Projects</a></li>
+                                        <li><a href="project_detail.html">Project Detail</a></li>
+                                        <li><a href="contacts.html">Contacts</a></li>
+                                        <li><a href="profile.html">Profile</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-windows"></i> Extras <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="page_403.html">403 Error</a></li>
+                                        <li><a href="page_404.html">404 Error</a></li>
+                                        <li><a href="page_500.html">500 Error</a></li>
+                                        <li><a href="plain_page.html">Plain Page</a></li>
+                                        <li><a href="login.html">Login Page</a></li>
+                                        <li><a href="pricing_tables.html">Pricing Tables</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-sitemap"></i> Multilevel Menu <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="#level1_1">Level One</a>
+                                        <li>
+                                            <a>Level One<span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li class="sub_menu">
+                                                    <a href="level2.html">Level Two</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_1">Level Two</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#level2_2">Level Two</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#level1_2">Level One</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- /sidebar menu -->
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+                        <a data-toggle="tooltip" data-placement="top" title="Settings">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Lock">
+                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="~/images/Tuan.png" alt="">John Doe
+                                    <span class=" fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li><a href="javascript:;"> Profile</a></li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <span class="badge bg-red pull-right">50%</span>
+                                            <span>Settings</span>
+                                        </a>
+                                    </li>
+                                    <li><a href="javascript:;">Help</a></li>
+                                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="">
+                    <div class="page-title">
+                        <div class="title_left">
+                            <h3>All Users</h3>
+                        </div>
+                        <div class="title_right">
+                            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                                <div class="input-group">
+                                    <form asp-action="SearchUser">
+                                        <div class="input-group">
+                                            <input type="text" name="MID" class="form-control">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="submit">Go</button>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    @{
+                        if (ueobj != null)
+                        {
+                            <div class="col-md-12 col-sm-12 col-xs-12 alert alert-info alert-dismissible fade in">
+                                @if (!ueobj.IdDuplicated.Equals(""))
+                                {
+                                    <span style="color: white;"><strong>@ueobj.IdDuplicated</strong></span>
+                                }
+                                @if (!ueobj.IdNotFound.Equals(""))
+                                {
+                                    <span style="color: white;"><strong>@ueobj.IdNotFound</strong></span>
+                                }
+                            </div>
+                        }
+                    }
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <ul class="nav navbar-right panel_toolbox" style="color: black;">
+                                    <h4>Today is: @DateTime.Now.ToString("dd/MM/yyyy")</h4>
+                                </ul>
+                                <div class="x_title">
+
+                                    <div class="clearfix"></div>
+                                </div>
+                                @{ int i = 1;}
+                                <div class="x_content">
+                                    <div class="table-responsive">
+                                        <table class="table" style="color: black;">
+                                            <thead>
+                                                <tr style="font-weight: 700;">
+                                                    <th>No.</th>
+                                                    <th>Member's ID</th>
+                                                    <th>Full Name</th>
+                                                    <th>Sex</th>
+                                                    <th>Role</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (Account acc in list)
+                                                {
+                                                <tr style="font-weight: 700;">
+                                                    <td>@i</td>
+                                                    <td>
+                                                        @acc.Id
+                                                        @if (acc.Status == false)
+                                                            {
+                                                            <label class="label label-danger">Deactivated</label>
+                                                            }
+                                                    </td>
+                                                    <td>@acc.FirstName @acc.LastName</td>
+                                                    <td>@acc.Sex</td>
+                                                    <td>@acc.R.Name</td>
+                                                    <td>
+                                                        <a class="btn btn-primary test" asp-action="ViewUser" asp-route-MID="@acc.Id" asp-route-lsv="@lastSearchValue">View info</a>
+                                                    </td>
+                                                </tr>
+                                                    i++;
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        @if (list.Count != 0)
+                        {
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>User detail</h2>
+                                    @if (accountBeingViewed != null)
+                                        {
+                                        @if (accountBeingViewed.Status.Value)
+                                            {
+                                        <h3 class="pull-right"><span class="label label-success" style="color: white;">This user is activated</span></h3>
+                                            }
+                                            else
+                                            {
+                                        <h3 class="pull-right"><span class="label label-danger" style="color: white;">This user is deactivated</span></h3>
+                                            }
+                                        }
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content" id="edit">
+                                    <br />
+                                    <form class="form-horizontal form-label-left input_mask" asp-action="UserCRUD">
+                                        @if (accountBeingViewed != null)
+                                            {
+                                            <input type="hidden" asp-for="Seq" value="@accountBeingViewed.Seq" />
+                                            <input type="hidden" asp-for="Status" value="@accountBeingViewed.Status.Value" />
+                                            }
+                                        <div class="col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
+                                            @if (accountBeingViewed != null)
+                                                {
+                                                <input type="text" class="form-control has-feedback-left" asp-for="Id" placeholder="MID" value="@accountBeingViewed.Id" readonly />
+                                                }
+                                                else
+                                                {
+                                                <input type="text" class="form-control has-feedback-left validate-elem" asp-for="Id" placeholder="MID" />
+                                                }
+                                            <span class="fa fa-id-card form-control-feedback left" aria-hidden="true"></span>
+                                        </div>
+
+
+                                        <div class="col-md-5 col-sm-6 col-xs-12">
+                                            @if (accountBeingViewed != null)
+                                                {
+                                                <input type="text" class="form-control has-feedback-left" asp-for="FirstName" placeholder="First Name" value="@accountBeingViewed.FirstName">
+                                                }
+                                                else
+                                                {
+                                                <input type="text" class="form-control has-feedback-left" asp-for="FirstName" placeholder="First Name">
+                                                }
+                                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                        </div>
+
+                                        <div class="clearfix"></div><br />
+
+                                        <div class="col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
+                                            @if (accountBeingViewed != null)
+                                                {
+                                                <input type="text" class="form-control has-feedback-left" asp-for="LastName" placeholder="Last Name" value="@accountBeingViewed.LastName">
+                                                }
+                                                else
+                                                {
+                                                <input type="text" class="form-control has-feedback-left" asp-for="LastName" placeholder="Last Name">
+                                                }
+                                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                        </div>
+
+                                        <div class="col-md-5 col-sm-6 col-xs-12">
+                                            <select class="form-control has-feedback-left validate-elem" asp-for="Sex">
+                                                @if (accountBeingViewed != null)
+                                                    {
+                                                    <option value="">Sex (LGBT supported)</option>
+                                                    @foreach (KeyValuePair<string, string> gender in genders)
+                                                        {
+                                                            if (accountBeingViewed.Sex.Equals(gender.Key))
+                                                            {
+                                                    <option value="@gender.Key" selected="selected">@gender.Value</option>
+                                                            }
+                                                            else
+                                                            {
+                                                    <option value="@gender.Key">@gender.Value</option>
+                                                            }
+
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                    <option value="">Sex (LGBT supported)</option>
+                                                    @foreach (KeyValuePair<string, string> gender in genders)
+                                                        {
+                                                    <option value="@gender.Key">@gender.Value</option>
+                                                        }
+                                                    }
+                                            </select>
+                                            <span class="fa fa-venus-mars form-control-feedback left" aria-hidden="true"></span>
+                                        </div>
+
+                                        <div class="clearfix"></div><br />
+
+                                        <div class="col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
+                                            @if (accountBeingViewed != null)
+                                                {
+                                                <input type="text" class="form-control has-feedback-left" asp-for="Password" placeholder="Password" value="@accountBeingViewed.Password">
+                                                }
+                                                else
+                                                {
+                                                <input type="text" class="form-control has-feedback-left" asp-for="Password" placeholder="Password">
+                                                }
+                                            <span class="fa fa-lock form-control-feedback left" aria-hidden="true"></span>
+                                        </div>
+
+
+                                        <div class="col-md-5 col-sm-6 col-xs-12">
+                                            @if (accountBeingViewed != null)
+                                                {
+                                                <div class="input-group date" id="myDatepicker">
+                                                    <input class="form-control" type="text" readonly="readonly" asp-for="Dob" value="@accountBeingViewed.Dob.Value.ToString("dd/MM/yyyy")">
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                                }
+                                                else
+                                                {
+                                                <div class="input-group date" id="myDatepicker">
+                                                    <input class="form-control validate-elem" type="text" readonly="readonly" placeholder="DOB" asp-for="Dob">
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                                }
+                                        </div>
+
+                                        <div class="clearfix"></div><br />
+
+                                        <div class="col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
+                                            @if (accountBeingViewed != null)
+                                                {
+                                                <input type="email" class="form-control has-feedback-left" asp-for="Email" placeholder="Email" value="@accountBeingViewed.Email">
+                                                }
+                                                else
+                                                {
+                                                <input type="email" class="form-control has-feedback-left" asp-for="Email" placeholder="Email">
+                                                }
+                                            <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                                        </div>
+
+                                        <div class="col-md-5 col-sm-6 col-xs-12">
+                                            @if (accountBeingViewed != null)
+                                                {
+                                                <input type="text" pattern="^[0-9]\d*$" title="Please input only numbers" class="form-control has-feedback-left" asp-for="Phone" placeholder="Phone" value="@accountBeingViewed.Phone">
+                                                }
+                                                else
+                                                {
+                                                <input type="text" pattern="^[0-9]\d*$" title="Please input only numbers" class="form-control has-feedback-left" asp-for="Phone" placeholder="Phone">
+                                                }
+                                            <span class="fa fa-phone form-control-feedback left" aria-hidden="true"></span>
+                                        </div>
+
+                                        <div class="clearfix"></div><br />
+
+                                        <div class="col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
+                                            @if (accountBeingViewed != null)
+                                                {
+                                                <input type="text" class="form-control has-feedback-left" asp-for="Address" placeholder="Address" value="@accountBeingViewed.Address">
+                                                }
+                                                else
+                                                {
+                                                <input type="text" class="form-control has-feedback-left" asp-for="Address" placeholder="Address">
+                                                }
+                                            <span class="fa fa-home form-control-feedback left" aria-hidden="true"></span>
+                                        </div>
+
+                                        <div class="col-md-5 col-sm-6 col-xs-12">
+                                            <select class="form-control has-feedback-left validate-elem" asp-for="Rid">
+                                                @if (accountBeingViewed != null)
+                                                    {
+                                                    <option value="">Role</option>
+                                                    @foreach (Role r in roles)
+                                                        {
+                                                            if (accountBeingViewed.Rid.Equals(r.Id))
+                                                            {
+                                                    <option value="@r.Id" selected="selected">@r.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                    <option value="@r.Id">@r.Name</option>
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                    <option value="">Role</option>
+                                                    @foreach (Role r in roles)
+                                                        {
+                                                    <option value="@r.Id">@r.Name</option>
+                                                        }
+                                                    }
+                                            </select>
+                                            <span class="fa fa-users form-control-feedback left" aria-hidden="true"></span>
+                                        </div>
+
+                                        <div class="clearfix"></div>
+                                        <div class="ln_solid"></div>
+                                        <div class="form-group">
+                                            <div>
+                                                <button type="submit" class="btn btn-success btnValidate" name="btnAction" value="create">Create user</button>
+                                                <button type="submit" class="btn btn-warning btnValidate" name="btnAction" value="update">Update user</button>
+                                                <input type="button" class="btn btn-info" onclick="blank_form()" value="Reset" />
+                                                <button class="btn btn-danger btnValidate" type="submit" name="btnAction" value="deactivate">Deactivate user</button>
+                                                <button class="btn btn-primary btnValidate" type="submit" name="btnAction" value="activate">Activate user</button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                        else
+                        {
+                        <div class="alert alert-info alert-dismissible fade in">
+                            <strong>Nothing to show</strong>
+                        </div>
+                        }
+                    </div>
+                </div>
+                
+            </div>
+            <!--Reset the user error object-->
+            @{
+                Context.Session.Set<UserErrorObject>("UserErrorObject", null);
+            }
+            <!-- /page content -->
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="~/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="~/vendors/nprogress/nprogress.js"></script>
+    <!-- iCheck -->
+    <script src="~/vendors/iCheck/icheck.min.js"></script>
+    <!--moment-->
+    <script src="~/vendors/moment/min/moment.min.js"></script>
+    <!-- bootstrap-datetimepicker-->
+    <script src="~/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="~/build/js/custom.min.js"></script>
+    <script>
+        $('#myDatepicker').datetimepicker({
+            ignoreReadonly: true,
+            allowInputToggle: true,
+            format: 'DD/MM/YYYY'
+        });
+
+        $(window).load(function () {
+
+
+                var empty = false;
+                $('.validate-elem').each(function () {
+                    if ($(this).val() == '') {
+                        empty = true;
+                    }
+                });
+
+                if (empty) {
+                    $('.btnValidate').prop('disabled', true);
+                } else {
+                    $('.btnValidate').prop('disabled', false);
+                }
+
+
+            @if(accountBeingViewed != null)
+            {
+                @:$("html, body").animate({ scrollTop: $(document).height() - $(window).height() });
+            }
+        });
+
+        $('.validate-elem').on('keyup change', function () {
+            var empty = false;
+            $('.validate-elem').each(function () {
+                if ($(this).val() == '') {
+                    empty = true;
+                }
+            });
+
+            if (empty) {
+                $('.btnValidate').prop('disabled', true);
+            } else {
+                $('.btnValidate').prop('disabled', false);
+            }
+        });
+
+        function blank_form() {
+            document.getElementById("Id").value = "";
+            document.getElementById("Id").removeAttribute("readonly");
+            document.getElementById("FirstName").value = "";
+            document.getElementById("LastName").value = "";
+            document.getElementById("Password").value = "";
+            document.getElementById("Dob").value = "";
+            document.getElementById("Phone").value = "";
+            document.getElementById("Email").value = "";
+            document.getElementById("Address").value = "";
+            document.getElementById("Rid").selectedIndex = 0;
+            document.getElementById("Sex").selectedIndex = 0;
+
+            var empty = false;
+            $('.validate-elem').each(function () {
+                if ($(this).val() == '') {
+                    empty = true;
+                }
+            });
+
+            if (empty) {
+                $('.btnValidate').prop('disabled', true);
+            } else {
+                $('.btnValidate').prop('disabled', false);
+            }
+        }
+
+
+
+
+
+    </script>
+
+</body>
+</html>

@@ -255,11 +255,11 @@
 }
 
 .main-panel {
-  position: relative;
-  padding-top: 1em;
-  box-sizing: border-box;
-  padding: 1em;
-  width: 100%;
+    position: relative;
+    padding-top: 1em;
+    box-sizing: border-box;
+    padding: 1em;
+    width: 100%;
 }
 
     .main-panel:nth-child(odd) {
@@ -311,175 +311,210 @@
     min-height: 120px;
 }
 
-    .main-panel .book-attr {
-        width: 100%;
-    }
+.main-panel .book-attr {
+    width: 100%;
+}
 
-    .main-panel .book-illu img {
-        width: 100%;
-        position: absolute;
-        transition: all .3s;
-    }
+.main-panel .book-illu img {
+    width: 100%;
+    position: absolute;
+    transition: all .3s;
+}
 
-    .main-panel .book-illu {
-        width: 90%;
-        margin: 0 auto;
-        position: relative;
-        box-sizing: border-box;
-        height: 60%;
-    }
+.main-panel .book-illu {
+    width: 90%;
+    margin: 0 auto;
+    position: relative;
+    box-sizing: border-box;
+    height: 60%;
+}
 
     .main-panel .book-illu:hover img {
         width: 105%;
     }
 
-    .main-panel .book .book-name {
-        font-size: 1.05em;
-        margin-top: 10px;
-        position: relative;
-        margin-left: .5em;
+.main-panel .book .book-name {
+    font-size: 1.05em;
+    margin-top: 10px;
+    position: relative;
+    margin-left: .5em;
+}
+
+.main-panel .book .book-rate {
+    color: #999999;
+    font-size: .8em;
+    margin-top: 5px;
+    position: relative;
+    margin-left: .5em;
+}
+
+.main-panel #tag-list {
+    box-sizing: border-box;
+    margin: 0 20%;
+}
+
+.tag-card {
+    font-size: .7em;
+    padding: .5em;
+    border-radius: 20px;
+    border: 2px solid #1a1a1a;
+    color: #1a1a1a;
+    margin: .25em;
+    display: inline-block;
+    min-width: 5em;
+    text-decoration: none;
+    text-align: center;
+}
+/*BOOK DETAIL*/
+.book-info {
+    box-sizing: border-box;
+    margin: 3em 10%;
+    width: 80%;
+    height: 300px;
+}
+
+    .book-info .book-illu, .book-main {
+        box-sizing: border-box;
+        display: inline-block;
+        height: 100%;
     }
 
-    .main-panel .book .book-rate {
+    .book-info .book-illu {
+        width: 30%;
+        max-width: 150px;
+    }
+
+    .book-info .book-main {
+        width: 70%;
+        padding-left: 1em;
+    }
+
+.book-main {
+    float: right;
+    position: relative;
+    color: #1a1a1a;
+}
+
+    .book-main .book-attr {
+        width: 100%;
+        box-sizing: border-box;
+        position: relative;
+        float: left;
+        margin-bottom: .25em;
+    }
+
+    .book-main .book-year {
         color: #999999;
         font-size: .8em;
-        margin-top: 5px;
-        position: relative;
-        margin-left: .5em;
-    }
-    .main-panel #tag-list {
-        box-sizing: border-box;
-        margin: 0 20%;
-    }
-    .tag-card {
-      font-size: .7em;
-      padding: .5em;
-      border-radius: 20px;
-      border: 2px solid #1a1a1a;
-      color: #1a1a1a;
-      margin: .25em;
-      display: inline-block;
-      min-width: 5em;
-      text-decoration: none;
-      text-align: center;
-    }
-    /*BOOK DETAIL*/
-    .book-info {
-      box-sizing: border-box;
-      margin: 3em 10%;
-      height: 200px;
-      width: 80%;
-    }
-    .book-info .book-illu, .book-main {
-      box-sizing: border-box;
-      display: inline-block;
-      height: 100%;
-    }
-    .book-info .book-illu {
-      width: 30%;
-      max-width: 150px;
-    }
-    .book-info .book-main {
-      width: 70%;
-      padding-left: 1em;
-    }
-    .book-main {
-      float: right;
-      position: relative;
-      color: #1a1a1a;
-    }
-    .book-main .book-attr {
-      width: 100%;
-      box-sizing: border-box;
-      position: relative;
-      float: left;
-      margin-bottom: .25em;
-    }
-    .book-main .book-year {
-      color: #999999;
-      font-size: .8em;
-    }
-        .book-main .book-name {
-            font-size: 1.3em;
-            font-weight: bold;
-            line-height: 1em;
-        }
-
-        .book-main a {
-            color: #1a1a1a;
-            position: relative;
-        }
-
-        .book-main .book-info a {
-            border: 1px solid #999999;
-            padding: .5em;
-            top: 1em;
-            transition: all .5s;
-        }
-
-            .book-main .book-info a:hover {
-                background-color: #d6b958;
-            }
-
-
-    #top-book {
-      box-sizing: border-box;
-      margin: 0;
-      position: relative;
-      overflow: hidden;
     }
 
-    .book-bib {
-      width: 100%;
-      clear: both;
-      overflow: auto;
-      margin: 1em;
+    .book-main .book-name {
+        font-size: 1.3em;
+        font-weight: bold;
+        line-height: 1em;
     }
+
+.book-name > a {
+    color: #1a1a1a;
+}
+
+.book-summary {
+    position: relative;
+}
+
+.added {
+    border: 1px solid #999999;
+    padding: .5em;
+    top: 2em;
+    color: #1a1a1a;
+    background-color: #999999;
+    position: relative;
+}
+
+.not-added {
+    border: 1px solid #1a1a1a;
+    padding: .5em;
+    top: 2em;
+    color: #1a1a1a;
+    transition: all .3s;
+    position: relative;
+}
+
+    .not-added:hover {
+        background-color: #d6b958;
+    }
+
+
+.book-main .book-info a:not(.added):hover {
+    background-color: #d6b958;
+}
+
+#top-book li {
+    float: right;
+}
+
+#top-book {
+    box-sizing: border-box;
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.book-bib {
+    width: 100%;
+    clear: both;
+    overflow: auto;
+    margin: 1em;
+}
 
     .book-bib .book-bib-com {
-      width: 40%;
-      display: inline-block;
-      border-bottom: 1px solid #999999;
-      padding: .75em;
-      margin: 0 .25em;
-      float: left;
-    }
-    .book-bib-com span {
-      display: block;
-      margin: 0;
-    }
-    .book-bib-com span:nth-child(odd){
-      color: #1a1a1a;
-      font-size: 1.1em;
-      font-weight: bold;
-    }
-    .book-bib-com span:nth-child(even){
-      color: #1a1a1a;
-    }
-    .book-bib-com .span-list a{
-      display: block;
+        width: 40%;
+        display: inline-block;
+        border-bottom: 1px solid #999999;
+        padding: .75em;
+        margin: 0 .25em;
+        float: left;
     }
 
-    .status-tag {
-      border: 1px solid #1a1a1a;
-      padding: .25em;
-      width: 80px;
-      text-align: center;
-      border-radius: 5px;
-      color: black;
+.book-bib-com span {
+    display: block;
+    margin: 0;
+}
+
+    .book-bib-com span:nth-child(odd) {
+        color: #1a1a1a;
+        font-size: 1.1em;
+        font-weight: bold;
     }
 
-    .book-bib-com .active {
-      background-color: #7FFF00;
+    .book-bib-com span:nth-child(even) {
+        color: #1a1a1a;
     }
 
-    /* book tab */
-    #book-tab {
-      width: 100%;
-    }
+.book-bib-com .span-list a {
+    display: block;
+}
+
+.status-tag {
+    border: 1px solid #1a1a1a;
+    padding: .25em;
+    width: 80px;
+    text-align: center;
+    border-radius: 5px;
+    color: black;
+}
+
+.book-bib-com .active {
+    background-color: #7FFF00;
+}
+
+/* book tab */
+#book-tab {
+    width: 100%;
+}
 
     #book-tab #tab1_content {
-      margin-left: 3em;
+        margin-left: 3em;
     }
 
     #book-tab ul.bar_tabs {
@@ -493,67 +528,76 @@
         width: 100%;
         border-bottom: 1px solid #E6E9ED
     }
-    #book-tab ul.bar_tabs>li {
-        border: 1px solid #E6E9ED;
-        color: #333 !important;
-        margin-top: -17px;
-        margin-left: 8px;
-        background: #fff;
-        border-bottom: none;
-        border-radius: 4px 4px 0 0
-    }
-    #book-tab ul.bar_tabs>li.active {
-        border-right: 0;
-        border-top: 0;
-        margin-top: -15px;
-    }
-    #book-tab ul.bar_tabs>li a {
-        padding: 10px 17px;
-        background: #F5F7FA;
-        margin: 0;
-        border-top-right-radius: 0
-    }
-    #book-tab ul.bar_tabs>li a:hover {
-        border: 1px solid transparent
-    }
-    #book-tab ul.bar_tabs>li.active a {
-        border-bottom: 5px solid #d6b958;
-    }
-    #book-tab ul.bar_tabs.right {
-        padding-right: 14px
-    }
-    #book-tab ul.bar_tabs.right li {
-        float: right
-    }
+
+        #book-tab ul.bar_tabs > li {
+            border: 1px solid #E6E9ED;
+            color: #333 !important;
+            margin-top: -17px;
+            margin-left: 8px;
+            background: #fff;
+            border-bottom: none;
+            border-radius: 4px 4px 0 0
+        }
+
+            #book-tab ul.bar_tabs > li.active {
+                border-right: 0;
+                border-top: 0;
+                margin-top: -15px;
+            }
+
+            #book-tab ul.bar_tabs > li a {
+                padding: 10px 17px;
+                background: #F5F7FA;
+                margin: 0;
+                border-top-right-radius: 0
+            }
+
+                #book-tab ul.bar_tabs > li a:hover {
+                    border: 1px solid transparent
+                }
+
+            #book-tab ul.bar_tabs > li.active a {
+                border-bottom: 5px solid #d6b958;
+            }
+
+        #book-tab ul.bar_tabs.right {
+            padding-right: 14px
+        }
+
+            #book-tab ul.bar_tabs.right li {
+                float: right
+            }
 
     #book-tab .nav-tabs {
-      border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
     }
 
-    #book-tab .nav-tabs > li > a {
-      margin-right: 2px;
-      line-height: 1.42857143;
-      border: 0;
-      border-radius: 0px;
-    }
-    .nav-tabs > li > a:hover {
-      border-color: #eee #eee #ddd;
-    }
-    .nav-tabs > li.active > a,
-    .nav-tabs > li.active > a:hover,
-    .nav-tabs > li.active > a:focus {
-      color: #555;
-      cursor: default;
-      background-color: #fff;
-      border-radius: 0px;
-      border-bottom-color: transparent;
-    }
-    /* PROFILE */
-    .profile-wrapper {
-      width: 100%;
-      margin-top: 2em;
-      min-height: 1000px;
-    }
+        #book-tab .nav-tabs > li > a {
+            margin-right: 2px;
+            line-height: 1.42857143;
+            border: 0;
+            border-radius: 0px;
+        }
+
+.nav-tabs > li > a:hover {
+    border-color: #eee #eee #ddd;
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border-radius: 0px;
+    border-bottom-color: transparent;
+}
+/* PROFILE */
+.profile-wrapper {
+    width: 100%;
+    margin-top: 2em;
+    min-height: 1000px;
+}
 /*FOOTER*/
 #footer-upper {
     background: #1a1a1a;

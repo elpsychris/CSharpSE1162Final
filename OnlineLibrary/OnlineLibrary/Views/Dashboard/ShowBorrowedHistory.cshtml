@@ -1,6 +1,9 @@
 ﻿@using OnlineLibrary.Models
+@using Microsoft.AspNetCore.Http;
 @{
     List<ActivityHistory> list = ViewBag.result;
+    Account acc = ViewBag.account;
+    string lastSearchValue = Context.Session.GetString("lastSearchValue");
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -214,70 +217,7 @@
                                 </ul>
                             </li>
 
-                            <li role="presentation" class="dropdown">
-                                <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-envelope-o"></i>
-                                    <span class="badge bg-green">6</span>
-                                </a>
-                                <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                                    <li>
-                                        <a>
-                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                                            <span>
-                                                <span>John Smith</span>
-                                                <span class="time">3 mins ago</span>
-                                            </span>
-                                            <span class="message">
-                                                Film festivals used to be do-or-die moments for movie makers. They were where~.
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a>
-                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                                            <span>
-                                                <span>John Smith</span>
-                                                <span class="time">3 mins ago</span>
-                                            </span>
-                                            <span class="message">
-                                                Film festivals used to be do-or-die moments for movie makers. They were where~.
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a>
-                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                                            <span>
-                                                <span>John Smith</span>
-                                                <span class="time">3 mins ago</span>
-                                            </span>
-                                            <span class="message">
-                                                Film festivals used to be do-or-die moments for movie makers. They were where~.
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a>
-                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                                            <span>
-                                                <span>John Smith</span>
-                                                <span class="time">3 mins ago</span>
-                                            </span>
-                                            <span class="message">
-                                                Film festivals used to be do-or-die moments for movie makers. They were where~.
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="text-center">
-                                            <a>
-                                                <strong>See All Alerts</strong>
-                                                <i class="fa fa-angle-right"></i>
-                                            </a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
+                            
                         </ul>
                     </nav>
                 </div>
@@ -288,7 +228,7 @@
                 <div class="">
                     <div class="page-title">
                         <div class="title_left">
-                            <h3>Borrowed History</h3>
+                            <h3>@acc.FirstName @acc.LastName's Borrowed History</h3>
                         </div>
                     </div>
 
@@ -301,47 +241,50 @@
                                     <h4>Today is: @DateTime.Now.ToString("dd/MM/yyyy")</h4>
                                 </ul>
                                 <div class="x_title">
-                                    <a asp-action="ShowBorrowedBooks" class="btn btn-primary">View your borrowing books</a>
+                                    <a asp-action="SearchMemberBorrowList" asp-route-MID="@lastSearchValue" class="btn btn-danger">Go back to member borrow list</a>
+                                    <a asp-action="ShowBorrowedBooks" asp-route-MID="@acc.Id" asp-route-lsv="@lastSearchValue" class="btn btn-primary">View @acc.LastName's borrowing books</a>
                                     <div class="clearfix"></div>
                                 </div>
 
                                 <div class="x_content">
-                                    @if (list.Count != 0)
-                                    {
-                                        <table class="table table-striped" style="color: black;">
-                                            <thead>
-                                                <tr>
-                                                    <th>No.</th>
-                                                    <th>Book's ID</th>
-                                                    <th>Book's Name</th>
-                                                    <th>Borrow Date</th>
-                                                    <th>Return Date</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @{
-                                                    int i = 1;
-                                                    @foreach (ActivityHistory ah in list)
-                                                    {
-                                                        <tr style="font-weight: 700;">
-                                                            <td>@i</td>
-                                                            <td>@ah.B.Id</td>
-                                                            <td>@ah.B.TitleNavigation.Name</td>
-                                                            <td>@ah.BorrowDate.Value.ToString("dd/MM/yyyy")</td>
-                                                            <td>@ah.ReturnDate.Value.ToString("dd/MM/yyyy")</td>
-                                                        </tr>
-                                                        i++;
+                                    <div class="table-responsive">
+                                        @if (list.Count != 0)
+                                        {
+                                            <table class="table" style="color: black;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No.</th>
+                                                        <th>Book's ID</th>
+                                                        <th>Book's Name</th>
+                                                        <th>Borrow Date</th>
+                                                        <th>Return Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{
+                                                        int i = 1;
+                                                        @foreach (ActivityHistory ah in list)
+                                                        {
+                                                            <tr style="font-weight: 700;">
+                                                                <td>@i</td>
+                                                                <td>@ah.B.Id</td>
+                                                                <td>@ah.B.TitleNavigation.Name</td>
+                                                                <td>@ah.BorrowDate.Value.ToString("dd/MM/yyyy")</td>
+                                                                <td>@ah.ReturnDate.Value.ToString("dd/MM/yyyy")</td>
+                                                            </tr>
+                                                            i++;
+                                                        }
                                                     }
-                                                }
-                                            </tbody>
-                                        </table>
-                                                    }
-                                                    else
-                                                    {
-                                                        <div class="alert alert-info alert-dismissible fade in" style="color: #2a2a2a;">
-                                                            <strong>You don't have any borrowed history</strong>
-                                                        </div>
-                                                    }
+                                                </tbody>
+                                            </table>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="alert alert-info alert-dismissible fade in" style="color: #2a2a2a;">
+                                                                <strong>This user doesn't have any borrowed history</strong>
+                                                            </div>
+                                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -9,6 +9,7 @@ namespace OnlineLibrary.Models
         {
             Book = new HashSet<Book>();
             FavoriteList = new HashSet<FavoriteList>();
+            RatingNavigation = new HashSet<Rating>();
             TitleCategoryDetail = new HashSet<TitleCategoryDetail>();
         }
 
@@ -25,9 +26,11 @@ namespace OnlineLibrary.Models
         public int? Views { get; set; }
         public double? Rating { get; set; }
         public int? ReturnType { get; set; }
+        public int? RatingNo { get; set; }
 
         public virtual ICollection<Book> Book { get; set; }
         public virtual ICollection<FavoriteList> FavoriteList { get; set; }
+        public virtual ICollection<Rating> RatingNavigation { get; set; }
         public virtual ICollection<TitleCategoryDetail> TitleCategoryDetail { get; set; }
         public virtual Author Author { get; set; }
         public virtual ReturnType ReturnTypeNavigation { get; set; }
