@@ -196,7 +196,6 @@ namespace OnlineLibrary.Controllers
         {
             TitleCategoryDetail tcd = null;
             List<string> categoriesList = categories.ToList();
-            List<string> currentCategoriesOfATitle = null;
             using (var context = new OnlineLibraryContext())
             {
                 switch (btnAction)
