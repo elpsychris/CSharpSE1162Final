@@ -10,6 +10,7 @@ namespace OnlineLibrary.Models
         
         public int msgCode { get; set; }
         public string msg { get; set; }
+        public string msgTitle { get; set; }
     }
 
 }

@@ -122,7 +122,7 @@ namespace OnlineLibrary.Controllers
                 ViewBag.newMem = context.Account.Where(acc => acc.Rid == "MEM").OrderByDescending(m => m.Seq).Take(5).ToList();
                 ViewBag.newBook = context.Book.OrderByDescending(b => b.Seq).Take(5)
                     .Include(b => b.TitleNavigation)
-                        .ThenInclude(t=>t.Author)
+                        .ThenInclude(t => t.Author)
                     .Include(b => b.Status).ToList();
                 ViewBag.newRating = context.Rating.OrderByDescending(t => t.RateId).Take(5)
                     .Include(r => r.MseqNavigation)
@@ -133,6 +133,31 @@ namespace OnlineLibrary.Controllers
         //For Report in Dashboard's index page
 
         //End Report
+
+        [HttpPost]
+        public IActionResult RegisterMemberToBorrow(Book b, string MID)
+        {
+            RegistrationMemberBookErrorObject rmbeo = new RegistrationMemberBookErrorObject();
+            rmbeo.setMessageIfIFBD(MID);
+            rmbeo.setMessageIfIFBAR(MID, b.Id);
+            rmbeo.setMessageIfINF(MID);
+            if (!rmbeo.hasError)
+            {
+                using (var context = new OnlineLibraryContext())
+                {
+                    ActivityHistory ah = new ActivityHistory { Mid = MID, Bid = b.Id, BorrowDate = DateTime.Now };
+                    context.ActivityHistory.Add(ah);
+                    context.Book.Where(book => book.Id.Equals(book.Id)).Single().StatusId = 3;
+                    context.SaveChanges();
+                }
+            }
+            else
+            {
+                HttpContext.Session.Set<RegistrationMemberBookErrorObject>("RegistrationMemberBookErrorObject", rmbeo);
+            }
+            return RedirectToAction("ShowTitleBooks", new { TID = HttpContext.Session.GetString("currentlyViewingTID") });
+        }
+
         [HttpPost]
         public IActionResult BookCRUD(string btnAction, Book b)
         {
@@ -170,14 +195,18 @@ namespace OnlineLibrary.Controllers
         public IActionResult TitleCRUD(string btnAction, Title t, string[] categories)
         {
             TitleCategoryDetail tcd = null;
-            List<string> categoriesToAdd = categories.ToList();
+            List<string> categoriesList = categories.ToList();
+            List<string> currentCategoriesOfATitle = null;
             using (var context = new OnlineLibraryContext())
             {
                 switch (btnAction)
                 {
                     case "create":
+                        t.Rating = 0;
+                        t.Views = 0;
+                        t.RatingNo = 0;
                         context.Title.Add(t);
-                        foreach (string c in categoriesToAdd)
+                        foreach (string c in categoriesList)
                         {
                             tcd = new TitleCategoryDetail { TitleId = t.Seq, CategoryId = Int32.Parse(c) };
                             context.TitleCategoryDetail.Add(tcd);
@@ -185,7 +214,25 @@ namespace OnlineLibrary.Controllers
                         context.SaveChanges();
                         break;
                     case "update":
-                        context.Title.Update(t);
+                        var title = context.Title.Where(a => a.Seq == t.Seq).Single();
+                        title.Name = t.Name;
+                        title.FullName = t.FullName;
+                        title.Publisher = t.Publisher;
+                        title.PublishYear = t.PublishYear;
+                        title.Isbn = t.Isbn;
+                        title.AvailableQuan = t.AvailableQuan;
+                        title.Illu = t.Illu;
+                        title.Description = t.Description;
+                        title.AuthorId = t.AuthorId;
+                        title.ReturnType = t.ReturnType;
+                        context.SaveChanges();
+                        context.TitleCategoryDetail.RemoveRange(context.TitleCategoryDetail.Where(a => a.TitleId == t.Seq));
+                        context.SaveChanges();
+                        foreach (string c in categoriesList)
+                        {
+                            tcd = new TitleCategoryDetail { TitleId = t.Seq, CategoryId = Int32.Parse(c) };
+                            context.TitleCategoryDetail.Add(tcd);
+                        }
                         context.SaveChanges();
                         break;
                 }
@@ -728,6 +775,10 @@ namespace OnlineLibrary.Controllers
                             account = context.Account.Where(m => m.Id.Equals(a.Id)).First();
                             account.Status = false;
                             context.SaveChanges();
+                            if (a.Id.Equals(curAcc["ID"]))
+                            {
+                                HttpContext.Session.Clear();
+                            }           
                         }
                         break;
                     case "activate":
@@ -856,7 +907,7 @@ namespace OnlineLibrary.Controllers
             //End check
             using (var context = new OnlineLibraryContext())
             {
-                var result = context.ActivityHistory.Where(ah => ah.ReturnDate == null).Include(m => m.M).Include(m => m.M.R).GroupBy(m => m.Mid).ToList();
+                var result = context.ActivityHistory.Include(m => m.M).Include(m => m.M.R).GroupBy(m => m.Mid).ToList();
                 ViewBag.result = result;
                 return View();
             }

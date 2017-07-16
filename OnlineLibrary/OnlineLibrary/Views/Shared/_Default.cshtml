@@ -58,7 +58,7 @@
 
             @if (curAcc != null)
             {
-                <a asp-action="Get_Fav"><img id="icon" src=@Url.Content($"~/images/{curAcc["Avatar"]}") /></a>
+                <a asp-action="Get_Fav"><img id="icon" src=@Url.Content($"~/images/{curAcc["Avatar"]?? "default_icon.png"}") /></a>
                 <a asp-action="Logout">
                     <b>
                         (Logout)
@@ -175,7 +175,7 @@
             <script>
                 setTimeout(function () {
                     new PNotify({
-                        title: 'Submit failed!',
+                        title: '@msg.msgTitle',
                         text: '@msg.msg',
                         type: 'error',
                         styling: 'bootstrap3'
@@ -190,7 +190,7 @@
             <script>
                 setTimeout(function () {
                     new PNotify({
-                        title: 'Submit successfully!',
+                        title: '@msg.msgTitle',
                         text: '@msg.msg',
                         type: 'success',
                         styling: 'bootstrap3'

@@ -7,3 +7,12 @@ D:\FinalCS\master2\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLib
 D:\FinalCS\master2\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.dll
 D:\FinalCS\master2\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.pdb
 D:\FinalCS\master2\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.csprojResolveAssemblyReference.cache
+D:\C#FinalProject\CSharpSE1162Final\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLibrary.deps.json
+D:\C#FinalProject\CSharpSE1162Final\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLibrary.runtimeconfig.json
+D:\C#FinalProject\CSharpSE1162Final\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLibrary.runtimeconfig.dev.json
+D:\C#FinalProject\CSharpSE1162Final\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLibrary.dll
+D:\C#FinalProject\CSharpSE1162Final\OnlineLibrary\OnlineLibrary\bin\Debug\netcoreapp1.1\OnlineLibrary.pdb
+D:\C#FinalProject\CSharpSE1162Final\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.AssemblyInfo.cs
+D:\C#FinalProject\CSharpSE1162Final\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.dll
+D:\C#FinalProject\CSharpSE1162Final\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.pdb
+D:\C#FinalProject\CSharpSE1162Final\OnlineLibrary\OnlineLibrary\obj\Debug\netcoreapp1.1\OnlineLibrary.csprojResolveAssemblyReference.cache
