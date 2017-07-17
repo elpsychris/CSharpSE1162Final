@@ -755,6 +755,7 @@ namespace OnlineLibrary.Controllers
                         ueobj.setErrorMessageIfIdDuplicated(a.Id);
                         if (!ueobj.hasError)
                         {
+                            a.Id = a.Id.ToUpper();
                             a.Status = true;
                             context.Account.Add(a);
                             context.SaveChanges();
