@@ -11,7 +11,7 @@
 <div class="">
     <div class="page-title">
         <div class="title_left">
-            <h3>@acc.FirstName @acc.LastName's Borrowed History</h3>
+            <h3>@acc.LastName @acc.FirstName's Borrowed History</h3>
         </div>
     </div>
 
@@ -25,7 +25,7 @@
                 </ul>
                 <div class="x_title">
                     <a asp-action="SearchMemberBorrowList" asp-route-MID="@lastSearchValue" class="btn btn-danger">Go back to member borrow list</a>
-                    <a asp-action="ShowBorrowedBooks" asp-route-MID="@acc.Id" asp-route-lsv="@lastSearchValue" class="btn btn-primary">View @acc.LastName's borrowing books</a>
+                    <a asp-action="ShowBorrowedBooks" asp-route-MID="@acc.Id" asp-route-lsv="@lastSearchValue" class="btn btn-primary">View @acc.FirstName's borrowing books</a>
                     <div class="clearfix"></div>
                 </div>
 
@@ -75,15 +75,4 @@
 </div>
 <!-- /page content -->
 
-@section scripts{
-    <!-- jQuery -->
-    <script src="~/vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="~/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="~/vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="~/vendors/nprogress/nprogress.js"></script>
-    <!-- iCheck -->
-    <script src="~/vendors/iCheck/icheck.min.js"></script>
-}
+

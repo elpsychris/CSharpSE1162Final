@@ -278,17 +278,17 @@
                                     <div class="col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
                                         @if (bookBeingViewed != null)
                                         {
-                                            <input type="text" class="form-control has-feedback-left validate-elem" asp-for="Id" placeholder="Book ID" readonly value="@bookBeingViewed.Id" />
+                                            <input type="text" class="form-control has-feedback-left validate-elem2" asp-for="Id" placeholder="Book ID" readonly value="@bookBeingViewed.Id" />
                                         }
                                         else
                                         {
-                                            <input type="text" class="form-control has-feedback-left validate-elem" asp-for="Id" placeholder="Book ID" />
+                                            <input type="text" class="form-control has-feedback-left validate-elem2" asp-for="Id" placeholder="Book ID" readonly/>
                                         }
                                         <span class="fa fa-id-card form-control-feedback left" aria-hidden="true"></span>
                                     </div>
 
                                     <div class="col-md-5 col-sm-6 col-xs-12">
-                                        <input type="text" class="form-control has-feedback-left validate-elem" name="MID" id="MID" placeholder="Member ID" />
+                                        <input type="text" class="form-control has-feedback-left validate-elem2" name="MID" id="MID" placeholder="Member ID" />
                                         <span class="fa fa-id-card form-control-feedback left" aria-hidden="true"></span>
                                     </div>
 
@@ -297,7 +297,7 @@
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
                                         <div>
-                                            <button type="submit" class="btn btn-success btnValidate">Register member and book</button>
+                                            <button type="submit" class="btn btn-success btnValidate2">Register member and book</button>
                                             <input type="button" class="btn btn-info" onclick="blank_form()" value="Reset" />
                                         </div>
                                     </div>
@@ -316,16 +316,7 @@
 <!-- /page content -->
 
 @section scripts{
-    <!-- jQuery -->
-    <script src="~/vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="~/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="~/vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="~/vendors/nprogress/nprogress.js"></script>
-    <!-- iCheck -->
-    <script src="~/vendors/iCheck/icheck.min.js"></script>
+    
     <!--moment-->
     <script src="~/vendors/moment/min/moment.min.js"></script>
     <!-- bootstrap-datetimepicker-->
@@ -353,12 +344,34 @@
             }
         });
 
+        $('.validate-elem2').on('keyup change', function () {
+            var empty = false;
+            $('.validate-elem2').each(function () {
+                if ($(this).val() == '' || $(this).val() == null) {
+                    empty = true;
+                }
+            });
+
+            if (empty) {
+                $('.btnValidate2').prop('disabled', true);
+            } else {
+                $('.btnValidate2').prop('disabled', false);
+            }
+        });
+
         window.onload = function () {
 
             var empty = false;
+            var empty2 = false;
             $('.validate-elem').each(function () {
                 if ($(this).val() == '' || $(this).val() == null) {
                     empty = true;
+                }
+            });
+
+            $('.validate-elem2').each(function () {
+                if ($(this).val() == '' || $(this).val() == null) {
+                    empty2 = true;
                 }
             });
 
@@ -366,6 +379,12 @@
                 $('.btnValidate').prop('disabled', true);
             } else {
                 $('.btnValidate').prop('disabled', false);
+            }
+
+            if (empty2) {
+                $('.btnValidate2').prop('disabled', true);
+            } else {
+                $('.btnValidate2').prop('disabled', false);
             }
 
 
@@ -383,7 +402,14 @@
 
 
             var empty = false;
+            var empty2 = false;
             $('.validate-elem').each(function () {
+                if ($(this).val() == '' || $(this).val() == null) {
+                    empty = true;
+                }
+            });
+
+            $('.validate-elem2').each(function () {
                 if ($(this).val() == '' || $(this).val() == null) {
                     empty = true;
                 }
@@ -393,6 +419,12 @@
                 $('.btnValidate').prop('disabled', true);
             } else {
                 $('.btnValidate').prop('disabled', false);
+            }
+
+            if (empty2) {
+                $('.btnValidate2').prop('disabled', true);
+            } else {
+                $('.btnValidate2').prop('disabled', false);
             }
         }
 

@@ -145,9 +145,9 @@ namespace OnlineLibrary.Controllers
             {
                 using (var context = new OnlineLibraryContext())
                 {
-                    ActivityHistory ah = new ActivityHistory { Mid = MID, Bid = b.Id, BorrowDate = DateTime.Now };
+                    ActivityHistory ah = new ActivityHistory { Mid = MID.ToUpper(), Bid = b.Id, BorrowDate = DateTime.Now };
                     context.ActivityHistory.Add(ah);
-                    context.Book.Where(book => book.Id.Equals(book.Id)).Single().StatusId = 3;
+                    context.Book.Where(book => book.Id.Equals(b.Id)).Single().StatusId = 3;
                     context.SaveChanges();
                 }
             }
@@ -170,6 +170,7 @@ namespace OnlineLibrary.Controllers
                         beo.setErrorMessageIfIdDuplicated(b.Id);
                         if (!beo.hasError)
                         {
+                            b.Id = b.Id.ToUpper();
                             context.Book.Add(b);
                             context.SaveChanges();
                         }
@@ -998,6 +999,8 @@ namespace OnlineLibrary.Controllers
                             context.Add<FineHistory>(fh);
                         }
                         ah.ReturnDate = DateTime.Now;
+                        var bok = context.Book.Where(bk => bk.Id.Equals(book)).Single();
+                        bok.StatusId = 1;
                         context.SaveChanges();
                     }
                 }
