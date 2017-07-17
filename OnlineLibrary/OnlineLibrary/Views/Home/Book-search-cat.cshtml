@@ -1,0 +1,176 @@
+﻿@using OnlineLibrary.Models
+@{
+    Layout = "_Default";
+    var catList = ViewBag.catList;
+    var result = ViewBag.SearchResult ?? new List<Title>();
+    List<Title> top_title = (List<Title>
+        )ViewBag.Top_View_Title;
+    var oldCats = ViewBag.OldCats ?? new List<int>();
+}
+
+@section moreCSS {
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- starRating-->
+    <link href="../css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
+    <!-- jQuery -->
+    <script src="../vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Custom Theme Style -->
+    <link href="../build/css/custom.min.css" rel="stylesheet">
+}
+<!--CONTENT-->
+<div class="main-panel">
+    <div class="center-wrapper">
+
+        <div class="left-wrapper">
+
+            <div class="title">
+                <span>Search by Category</span>
+            </div>
+            <div class="book-list">
+                <select class="form-control has-feedback-left categories validate-elem" name="categories" multiple="multiple">
+                    @foreach (var cat in catList)
+                    {
+                        bool check = false;
+
+                        foreach (var oldcat in oldCats)
+                        {
+                            if (cat.Seq == Int32.Parse(oldcat))
+                            {
+                                <option value="@cat.Seq" selected="selected">@cat.Name</option>
+                                check = true;
+                            }
+                        }
+                        if (!check)
+                        {
+
+                            <option value="@cat.Seq">@cat.Name</option>
+                        }
+
+                    }
+                </select>
+
+            </div>
+
+            @foreach (var title in result)
+            {
+                <div class="book-info">
+                    <div class="book-illu">
+                        <a asp-route-titleID="@title.Seq" asp-action="Book_Detail_Info">
+                            <img src=@Url.Content(@"~/images/" + title.Illu ?? "default_book.png" )>
+                        </a>
+                    </div>
+                    <div class="book-main">
+                        <div class="book-attr book-year">© @title.PublishYear</div>
+                        <div class="book-attr book-name">
+                            <a asp-route-titleID="@title.Seq" asp-action="Book_Detail_Info">
+                                @title.Name <br /><small>@(title.FullName)</small>
+                            </a>
+                        </div>
+                        <div class="book-attr book-author"><b>Authors:</b> @title.Author.FirstName @title.Author.LastName</div>
+                        <div class="book-attr book-rate">
+                            <input value="@title.Rating" data-readonly="true" data-size="xs" class="rating-system rating-loading" data-show-clear="false" data-min="0" data-max="5" data-step="1">
+                        </div>
+                        <div class="book-attr book-summary">
+                            <p id="tab1_content">@(title.Description.Length > 150 ? $"{title.Description.Substring(0, 150)}... " : title.Description)<a asp-route-titleID="@title.Seq" asp-action="Book_Detail_Info">Read more</a></p>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+
+        <div id="top-book" class="x_panel">
+            <div class="x_title">
+                <h2>HOT TITLES</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @foreach (Title title in top_title)
+                {
+                    <div class="book-info book-info-small">
+                        <div class="book-illu">
+                            <a asp-route-titleID="@title.Seq" asp-action="Book_Detail_Info">
+                                <img src=@Url.Content(@"~/images/" + @title.Illu ?? "default_book.png" )>
+                            </a>
+                        </div>
+                        <div class="book-main">
+                            <div class="book-attr book-year">© @title.PublishYear</div>
+                            <div class="book-attr book-name small"><a asp-route-titleID="@title.Seq" asp-action="Detail_Info">@title.Name</a></div>
+                            <div class="book-attr book-author">Authors: @title.Author.FirstName @title.Author.LastName</div>
+                            <div class="book-attr book-rate">Views: @title.Views</div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+
+</div>
+@section scripts {
+    <!--select2-->
+    <script src="~/vendors/select2/dist/js/select2.min.js"></script>
+    <!-- FastClick -->
+    <script src="../vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="../vendors/nprogress/nprogress.js"></script>
+    <!-- iCheck -->
+    <script src="../vendors/iCheck/icheck.min.js"></script>
+    <!-- starRating-->
+    <script src="../js/star-rating/star-rating.js" type="text/javascript"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="../build/js/custom.min.js"></script>
+
+    <script>
+
+        $(".categories").select2({
+            placeholder: 'Tags',
+        });
+        $(document).ready(function () {
+            var $eventSelect = $("select[name=categories]");
+            var data = $('select[name=categories]').select2('data');
+            $eventSelect.on("select2:select", function (e) {
+                var url = "/Home/AutoSearchByCat";
+                var cat_string = $("select[name=categories]").select2("data");
+                for (i = 0; i < cat_string.length; i++) {
+                    if (i == 0) {
+                        url = url + "?catString=" + cat_string[i].id;
+                    } else
+                        url += ("-" + cat_string[i].id);
+                    alert(url);
+                }
+                window.location.replace(url);
+            });
+        })
+    </script>
+
+    <script>
+        $(document).on('ready', function () {
+            $('.rating-system').rating({
+                step: 1,
+                starCaptions: { 1: 'Poor', 2: 'Lame', 3: 'So-so', 4: 'Good', 5: 'Masterpiece' },
+                starCaptionClasses: { 1: 'label label-danger', 2: 'label label-warning', 3: 'label label-info', 4: 'label label-primary', 5: 'label label-success' }
+            });
+
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.ui-pnotify').remove();
+        });
+
+    </script>
+}
+

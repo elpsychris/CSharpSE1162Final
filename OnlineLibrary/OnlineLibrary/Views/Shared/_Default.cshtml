@@ -58,7 +58,7 @@
 
             @if (curAcc != null)
             {
-                <a asp-action="Get_Fav"><img id="icon" src=@Url.Content($"~/images/{curAcc["Avatar"]}") /></a>
+                <a asp-action="Get_Fav"><img id="icon" src=@Url.Content($"~/images/{curAcc["Avatar"]?? "default_icon.png"}") /></a>
                 <a asp-action="Logout">
                     <b>
                         (Logout)
@@ -79,7 +79,7 @@
         <div class="menu-bar">
             <ul>
                 <li class="menu-child"><a asp-action="Index">Home</a></li>
-                <li class="menu-child"><a href="#">Resources</a></li>
+                <li class="menu-child"><a href="/Home/SearchByCat">Categories</a></li>
                 <li class="menu-child"><a href="#">About Us</a></li>
             </ul>
         </div>
@@ -175,7 +175,7 @@
             <script>
                 setTimeout(function () {
                     new PNotify({
-                        title: 'Submit failed!',
+                        title: '@msg.msgTitle',
                         text: '@msg.msg',
                         type: 'error',
                         styling: 'bootstrap3'
@@ -190,7 +190,7 @@
             <script>
                 setTimeout(function () {
                     new PNotify({
-                        title: 'Submit successfully!',
+                        title: '@msg.msgTitle',
                         text: '@msg.msg',
                         type: 'success',
                         styling: 'bootstrap3'

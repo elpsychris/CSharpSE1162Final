@@ -132,6 +132,7 @@ namespace OnlineLibrary.Controllers
 
                     ViewBag.msg = new MsgObject
                     {
+                        msgTitle = "Login success!",
                         msgCode = 1,
                         msg = hiMsg
                     };
@@ -249,24 +250,95 @@ namespace OnlineLibrary.Controllers
             return View("Book-detail");
         }
 
+        public IActionResult Remove_From_Fav(int titleId)
+        {
+            try
+            {
+                //Check cur user
+                var curAcc = checkCurAcc();
+                if (curAcc == null)
+                {
+                    return View("Login_admin");
+                }
+                else
+                {
+                    ViewBag.CurAcc = curAcc;
+                }
+                //End check
+                var userSEQ = Int32.Parse(curAcc["Seq"] ?? "-1");
+                Account member;
+                using (var context = new OnlineLibraryContext())
+                {
+                    FavoriteList fav_list = context.FavoriteList.Where(fl => fl.TitleId == titleId && fl.MemberId == userSEQ).SingleOrDefault();
+                    context.Remove(fav_list);
+                    context.SaveChanges();
+                    member = context.Account.Find(userSEQ);
+                    ViewBag.msg = new MsgObject
+                    {
+                        msgTitle = "Favorite list removed successfully!",
+                        msgCode = 1,
+                        msg = "Title was removed from your list"
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+                ViewBag.msg = new MsgObject
+                {
+                    msgTitle = "Favorite list removing failed!",
+                    msgCode = -1,
+                    msg = "Error: " + e
+                };
+            }
+
+            return Get_Fav();
+        }
         public IActionResult Add_To_Fav(int titleId)
         {
             //var userId = HttpContext.Session.Get("E00001  ");
-            var curAcc = checkCurAcc();
-            var userSEQ = Int32.Parse(curAcc["Seq"] ?? "-1");
-            Account member;
-            using (var context = new OnlineLibraryContext())
+            try
             {
-                FavoriteList fav_list = new FavoriteList
+                //Check cur user
+                var curAcc = checkCurAcc();
+                if (curAcc == null)
                 {
-                    TitleId = titleId,
-                    MemberId = userSEQ
-                };
-                context.Add(fav_list);
-                context.SaveChanges();
-                member = context.Account.Find(userSEQ);
-
+                    return View("Login");
+                }
+                else
+                {
+                    ViewBag.CurAcc = curAcc;
+                }
+                //End check
+                var userSEQ = Int32.Parse(curAcc["Seq"] ?? "-1");
+                Account member;
+                using (var context = new OnlineLibraryContext())
+                {
+                    FavoriteList fav_list = new FavoriteList
+                    {
+                        TitleId = titleId,
+                        MemberId = userSEQ
+                    };
+                    context.Add(fav_list);
+                    context.SaveChanges();
+                    member = context.Account.Find(userSEQ);
+                    ViewBag.msg = new MsgObject
+                    {
+                        msgTitle = "Favorite list added successfully!",
+                        msgCode = 1,
+                        msg = "A new title was added in your list"
+                    };
+                }
             }
+            catch (Exception e)
+            {
+                ViewBag.msg = new MsgObject
+                {
+                    msgTitle = "Adding to Favorite failed!",
+                    msgCode = -1,
+                    msg = "Error: " + e
+                };
+            }
+
             return Get_Fav();
         }
 
@@ -300,8 +372,9 @@ namespace OnlineLibrary.Controllers
             {
                 ViewBag.msg = new MsgObject
                 {
+                    msgTitle = "Updating successfully!",
                     msgCode = 1,
-                    msg = "Account information updating successfully!"
+                    msg = "Your profile was updated"
                 };
                 msg = null;
             }
@@ -312,7 +385,17 @@ namespace OnlineLibrary.Controllers
 
         public IActionResult Rating(int yourRate, int titleSeq)
         {
+            //Check cur user
             var curAcc = checkCurAcc();
+            if (curAcc == null)
+            {
+                return View("Login");
+            }
+            else
+            {
+                ViewBag.CurAcc = curAcc;
+            }
+            //End check
             var userSEQ = int.Parse(curAcc["Seq"] ?? "-1");
             if (yourRate > 5)
             {
@@ -354,7 +437,58 @@ namespace OnlineLibrary.Controllers
         }
 
 
+        public IActionResult SearchByCat()
+        {
+            using (var context = new OnlineLibraryContext())
+            {
+                ViewBag.catList = context.Category.ToList();
+                var top_view_title = context.Title
+                   .Include(t => t.Author)
+                   .OrderByDescending(t => t.Views).Take(5).ToList();
+                ViewBag.Top_View_Title = top_view_title;
+            }
 
+
+            return View("Book-search-cat");
+        }
+
+        public IActionResult AutoSearchByCat(string catString)
+        {
+            List<string> catList = new List<string>(catString.Split('-'));
+            try
+            {
+                using (var context = new OnlineLibraryContext())
+                {
+                    if (catList != null)
+                    {
+                        List<Title> SearchResult = new List<Title>();
+                        var titleList = context.TitleCategoryDetail.Include(t=>t.Title).ThenInclude(t=>t.Author).GroupBy(t=> new {title= t.Title, cat = t.CategoryId}).ToList();
+                        foreach(var t in titleList)
+                        {
+                            if (catList.Contains(t.Key.cat.ToString())&&!SearchResult.Contains(t.Key.title))
+                            {
+                                SearchResult.Add(t.Key.title);
+                            }
+                        }
+                        
+                        
+                        ViewBag.SearchResult = SearchResult;
+                        ViewBag.OldCats = catList;
+
+                        ViewBag.catList = context.Category.ToList();
+                        var top_view_title = context.Title
+                           .Include(t => t.Author)
+                           .OrderByDescending(t => t.Views).Take(5).ToList();
+                        ViewBag.Top_View_Title = top_view_title;
+                    }
+                }
+            }
+            catch
+            {
+                return SearchByCat();
+            }
+            return View("Book-search-cat");
+        }
         public IActionResult Search(IFormCollection data)
         {
             using (var context = new OnlineLibraryContext())
@@ -386,8 +520,17 @@ namespace OnlineLibrary.Controllers
 
         public IActionResult User_Modify()
         {
+            //Check cur user
             var curAcc = checkCurAcc();
-            ViewBag.CurAcc = curAcc;
+            if (curAcc == null)
+            {
+                return View("Login");
+            }
+            else
+            {
+                ViewBag.CurAcc = curAcc;
+            }
+            //End check
             using (var context = new OnlineLibraryContext())
             {
                 var account = context.Account.Find(Int32.Parse(curAcc["Seq"]));
@@ -413,8 +556,17 @@ namespace OnlineLibrary.Controllers
         [HttpPost]
         public async Task<IActionResult> Update_UInfo(IFormFile file, UpdateInfo account, string typeSubmit)
         {
+            //Check cur user
             var curAcc = checkCurAcc();
-            ViewBag.CurAcc = curAcc;
+            if (curAcc == null)
+            {
+                return View("Login");
+            }
+            else
+            {
+                ViewBag.CurAcc = curAcc;
+            }
+            //End check
             if (file != null)
             {
                 var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "images");
@@ -431,8 +583,9 @@ namespace OnlineLibrary.Controllers
                         ViewBag.OldData = account;
                         ViewBag.msg = new MsgObject
                         {
+                            msgTitle = "Uploading successfully!",
                             msgCode = 1,
-                            msg = "Avatar uploading successfully!"
+                            msg = "Your avatar was uploaded successfully"
                         };
                     }
                     catch (Exception e)
@@ -440,8 +593,9 @@ namespace OnlineLibrary.Controllers
                         ViewBag.OldData = account;
                         ViewBag.msg = new MsgObject
                         {
+                            msgTitle = "Uploading failed!",
                             msgCode = -1,
-                            msg = "Avatar uploading failed!\nError: " + e.Message
+                            msg = "Error: " + e.Message
                         };
                     }
                     return View("User-modify", account);
@@ -463,12 +617,13 @@ namespace OnlineLibrary.Controllers
                         {
                             acc.Dob = (DateTime?)DateTime.ParseExact(account.Dob, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                         }
-                        catch
+                        catch (Exception e)
                         {
                             ViewBag.msg = new MsgObject
                             {
+                                msgTitle = "Submit failed!",
                                 msgCode = -1,
-                                msg = "Date of Birth is in wrong format!"
+                                msg = "Date of Birth is in wrong format!\nError: " + e
                             };
                             return View("User-modify", account);
                         }
@@ -478,23 +633,39 @@ namespace OnlineLibrary.Controllers
                         acc.Sex = account.Gender;
                         context.Account.Update(acc);
                         context.SaveChanges();
+
+                        //Update info in session scope
+                        Dictionary<string, string> accountInfo = new Dictionary<string, string>
+                        {
+                            ["Seq"] = account.Seq.ToString(),
+                            ["ID"] = account.Id,
+                            ["Avatar"] = $@"{account.Avatar}",
+                            ["FirstName"] = $"{account.FirstName}",
+                            ["LastName"] = $"{account.LastName}"
+                        };
+
+                        HttpContext.Session.Set("CurAcc", accountInfo);
+                        ViewBag.curAcc = accountInfo;
                     }
                 }
                 catch
                 {
                     ViewBag.msg = new MsgObject
                     {
+                        msgTitle = "Updating failed!",
                         msgCode = -1,
-                        msg = "Account information updating failed!"
+                        msg = "Account information was not updated!"
                     };
                     return View("User-modify", account);
                 }
             }
             msg = ViewBag.msg = new MsgObject
             {
+                msgTitle = "Updating successfully!",
                 msgCode = 1,
                 msg = "Account information updating successfully!"
             };
+
             return Get_Fav();
 
         }

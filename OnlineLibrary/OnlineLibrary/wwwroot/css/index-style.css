@@ -379,7 +379,8 @@
 
 .book-summary {
     position: relative;
-} 
+}
+
 .added {
     border: 1px solid #999999;
     padding: .5em;
@@ -403,6 +404,7 @@
 #top-book li {
     float: right;
 }
+
 #top-book .book-name {
     font-size: 1em;
 }
@@ -554,6 +556,58 @@
     background-color: #fff;
     border-radius: 0px;
     border-bottom-color: transparent;
+}
+/* ABOUT US */
+#member-panel {
+    background: url("../images/library-banner.png");
+    background-size: 40% auto;
+    background-position: right bottom;
+    background-repeat: no-repeat;
+}
+
+.member-list {
+    width: 70%;
+    box-sizing: border-box;
+    display: flex;
+    margin-bottom: 1em;
+}
+
+    .member-list .member-avatar {
+        width: 10vw;
+        background: green;
+        height: 10vw;
+    }
+
+    .member-list .member-description {
+        width: auto;
+        padding: 1em;
+    }
+
+        .member-list .member-description span:not(.role) {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .member-list .member-description .role {
+            font-size: 1.1em;
+            color: #1a1a1a;
+        }
+
+#Tuan {
+    background: url("../images/Tuan.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+#Bao {
+    background: url("../images/Bao.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+#Nguyen {
+    background: url("../images/Nguyen.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 /* PROFILE */
 .profile-wrapper {

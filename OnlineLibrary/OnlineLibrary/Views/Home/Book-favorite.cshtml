@@ -41,7 +41,7 @@
             <div class="profile_img">
                 <div id="crop-avatar">
                     <!-- Current avatar -->
-                    <img class="img-responsive avatar-view" src=@Url.Content(@"~/images/"+accountInfo.Avatar) alt="Avatar" title="Change the avatar">
+                    <img class="img-responsive avatar-view" src=@Url.Content(@"~/images/"+(accountInfo.Avatar?? "default_icon.png")) alt="Avatar" title="Change the avatar">
                 </div>
             </div>
             <h3>@accountInfo.FirstName @accountInfo.LastName</h3>
@@ -157,6 +157,7 @@
                                         <th>Publisher</th>
                                         <th>Year</th>
                                         <th>ISBN</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -171,6 +172,7 @@
                                             <td>@resultE.Title.Publisher</td>
                                             <td>@resultE.Title.PublishYear</td>
                                             <td>@resultE.Title.Isbn</td>
+                                            <td><a asp-action="Remove_From_Fav" asp-route-titleId="@resultE.TitleId">Remove</a></td>
                                         </tr>
                                     }
                                 </tbody>

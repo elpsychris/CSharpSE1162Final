@@ -293,7 +293,7 @@
                             </div>
 
                             <div class="col-md-5 col-sm-6 col-xs-12">
-                                <select class="form-control has-feedback-left categories validate-elem" name="categories" multiple="multiple">
+                                <select class="form-control has-feedback-left categories validate-elem" name="categories" id="categoriesClear" multiple="multiple">
                                     @if (titleBeingViewed != null)
                                     {
                                         List<Category> compare = new List<Category>();
@@ -352,7 +352,7 @@
     <script>
 
         $(".categories").select2({
-            placeholder: 'Tags',
+            placeholder: 'Tags'
         });
 
         $('#myDatepicker').datetimepicker({
@@ -405,10 +405,14 @@
             document.getElementById("FullName").value = "";
             document.getElementById("Publisher").value = "";
             document.getElementById("PublishYear").value = "";
+            document.getElementById("AuthorId").selectedIndex = 0;
+            document.getElementById("ReturnType").value = "";
+            document.getElementById("Illu").value = "";
             document.getElementById("Isbn").value = "";
             document.getElementById("AvailableQuan").value = "";
             document.getElementById("Description").innerHTML = "";
-
+            $("#categoriesClear").val('').trigger('change');
+            
             var empty = false;
             $('.validate-elem').each(function () {
                 if ($(this).val() == '' || $(this).val() == null) {
@@ -423,6 +427,5 @@
             }
         }
     </script>
-    <!-- Custom Theme Scripts -->
-    <script src="~/build/js/custom.min.js"></script>
+
 }
